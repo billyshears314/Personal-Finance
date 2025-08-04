@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
 import { Pot } from "./entity/Pot"; // adjust path accordingly
+import { Theme } from "./entity/Theme"; // adjust path accordingly
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -10,5 +11,5 @@ export const AppDataSource = new DataSource({
   database: "testdb",
   synchronize: true,
   logging: false,
-  entities: [Pot],
+  entities: [Pot, Theme],
 });

@@ -9,5 +9,5 @@ export class Theme {
   name: string;
 
   @Column({ unique: true })
-  hexColor: string;
+  color: string;
 }
