@@ -1,24 +1,22 @@
-import {postGetAllAction} from "./controller/PostGetAllAction";
-import {postGetByIdAction} from "./controller/PostGetByIdAction";
-import {postSaveAction} from "./controller/PostSaveAction";
+// import { potGetAll, potGetById, potSave } from "./controllers/potController";
 
-/**
- * All application routes.
- */
-export const AppRoutes = [
-    {
-        path: "/posts",
-        method: "get",
-        action: postGetAllAction
-    },
-    {
-        path: "/posts/:id",
-        method: "get",
-        action: postGetByIdAction
-    },
-    {
-        path: "/posts",
-        method: "post",
-        action: postSaveAction
-    }
-];
+// /**
+//  * All application routes.
+//  */
+// export const AppRoutes = [
+//   {
+//     path: "/pots",
+//     method: "get",
+//     action: potGetAll,
+//   },
+//   {
+//     path: "/pots/:id",
+//     method: "get",
+//     action: potGetById,
+//   },
+//   {
+//     path: "/pots",
+//     method: "post",
+//     action: potSave,
+//   },
+// ];

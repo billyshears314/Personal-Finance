@@ -2,29 +2,30 @@ import "reflect-metadata";
 import { Request, Response } from "express";
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import { AppRoutes } from "./routes";
+// import { AppRoutes } from "./routes";
 import { AppDataSource } from "./data-source";
+import potsRouter from "./routes/pots";
 
-AppDataSource.initialize().then(() => {
-  // create express app
-  const app = express();
-  app.use(bodyParser.json());
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-  // register all application routes
-  AppRoutes.forEach((route) => {
-    app[route.method](
-      route.path,
-      (request: Request, response: Response, next: Function) => {
-        route
-          .action(request, response)
-          .then(() => next)
-          .catch((err) => next(err));
-      }
-    );
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000", // 👈 Allow frontend origin
+//     credentials: true, // 👈 if using cookies or Authorization header
+//   })
+// );
+
+AppDataSource.initialize().then(async () => {
+  const PORT = process.env.PORT || 3000;
+
+  app.use(express.json());
+
+  // Mount routes
+  app.use("/pots", potsRouter);
+
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
   });
-
-  // run app
-  app.listen(3000);
-
-  console.log("Express application is up and running on port 3000");
 });
