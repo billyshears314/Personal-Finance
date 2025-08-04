@@ -6,6 +6,7 @@ import * as bodyParser from "body-parser";
 import { AppDataSource } from "./data-source";
 import potsRouter from "./routes/pots";
 import themesRouter from "./routes/themes";
+import partiesRouter from "./routes/parties";
 
 const app = express();
 app.use(bodyParser.json());
@@ -26,6 +27,7 @@ AppDataSource.initialize().then(async () => {
   // Mount routes
   app.use("/pots", potsRouter);
   app.use("/themes", themesRouter);
+  app.use("/parties", partiesRouter);
 
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

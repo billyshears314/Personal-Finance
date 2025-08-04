@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
+import { Theme } from "./Theme";
 
 @Entity()
 export class Pot {
@@ -14,5 +21,7 @@ export class Pot {
   @Column()
   target: number;
 
-  //TODO: THEME
+  @OneToOne(() => Theme, { eager: true })
+  @JoinColumn()
+  theme: Theme;
 }
