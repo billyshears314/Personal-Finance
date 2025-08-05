@@ -3,25 +3,30 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToOne,
+  OneToMany,
   JoinColumn,
 } from "typeorm";
 import { Theme } from "./Theme";
+import { Transaction } from "./Transaction";
 
 @Entity()
 export class Budget {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ unique: true })
-  name: string;
+  name!: string;
 
-  @Column()
-  spent: number;
+  @Column("numeric")
+  spent!: number;
 
-  @Column()
-  max: number;
+  @Column("numeric")
+  max!: number;
 
   @OneToOne(() => Theme, { eager: true })
   @JoinColumn()
-  theme: Theme;
+  theme!: Theme;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.budget)
+  transactions: Transaction[];
 }

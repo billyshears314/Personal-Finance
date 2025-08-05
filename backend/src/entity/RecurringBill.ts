@@ -1,15 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
+import { Party } from "./Party";
 
 @Entity()
 export class RecurringBill {
   @PrimaryGeneratedColumn()
-  id: number;
-
-  // TODO: Entity
+  id!: number;
 
   @Column()
-  dueDate: string;
+  dueDate!: string;
 
-  @Column()
-  amount: number;
+  @Column("numeric")
+  amount!: number;
+
+  @OneToOne(() => Party, { eager: true })
+  @JoinColumn()
+  party!: Party;
 }

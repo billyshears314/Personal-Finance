@@ -10,18 +10,18 @@ import { Theme } from "./Theme";
 @Entity()
 export class Pot {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ unique: true })
-  name: string;
+  name!: string;
 
-  @Column()
-  saved: number;
+  @Column("numeric")
+  saved!: number;
 
-  @Column()
-  target: number;
+  @Column("numeric")
+  target!: number;
 
   @OneToOne(() => Theme, { eager: true })
   @JoinColumn()
-  theme: Theme;
+  theme!: Theme;
 }

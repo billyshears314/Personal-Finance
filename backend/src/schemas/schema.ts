@@ -1,3 +1,4 @@
+import { serializeWithBufferAndIndex } from "typeorm/driver/mongodb/bson.typings";
 import { z } from "zod";
 
 export const identifierSchema = z.object({
@@ -25,6 +26,26 @@ export const budgetSchema = z.object({
   theme: z.object({
     id: z.number(),
   }),
+});
+
+export const transactionSchema = z.object({
+  party: z.object({
+    id: z.number(),
+  }),
+  budget: z.object({
+    id: z.number(),
+  }),
+  // TODO change to z.date()
+  date: z.string(),
+  amount: z.number(),
+});
+
+export const recurringBillSchema = z.object({
+  party: z.object({
+    id: z.number(),
+  }),
+  dueDate: z.string(),
+  amount: z.number(),
 });
 
 export const themeSchema = z.object({

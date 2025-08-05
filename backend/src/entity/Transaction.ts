@@ -1,16 +1,29 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
+import { Party } from "./Party";
+import { Budget } from "./Budget";
 
 @Entity()
 export class Transaction {
   @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
-  name: string;
+  id!: number;
 
   @Column({ type: "date" })
-  date: string;
+  date!: string;
 
-  @Column()
-  amount: number;
+  @Column("numeric")
+  amount!: number;
+
+  @OneToOne(() => Party, { eager: true })
+  @JoinColumn()
+  party!: Party;
+
+  @ManyToOne(() => Budget, (budget) => budget.transactions)
+  budget: Budget;
 }

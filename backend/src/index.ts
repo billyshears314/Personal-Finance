@@ -8,6 +8,8 @@ import potsRouter from "./routes/pots";
 import themesRouter from "./routes/themes";
 import partiesRouter from "./routes/parties";
 import budgetsRouter from "./routes/budgets";
+import transactionsRouter from "./routes/transactions";
+import recurringBillsRouter from "./routes/recurringBills";
 
 const app = express();
 app.use(bodyParser.json());
@@ -30,6 +32,8 @@ AppDataSource.initialize().then(async () => {
   app.use("/themes", themesRouter);
   app.use("/parties", partiesRouter);
   app.use("/budgets", budgetsRouter);
+  app.use("/transactions", transactionsRouter);
+  app.use("/recurringBills", recurringBillsRouter);
 
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
