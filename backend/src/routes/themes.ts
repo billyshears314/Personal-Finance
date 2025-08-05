@@ -8,7 +8,7 @@ import {
   deleteTheme,
 } from "../controllers/themeController";
 import { validate } from "../middlewares/validate";
-import { themeSchema } from "../schemas/themeSchema";
+import { themeSchema } from "../schemas/schema";
 
 import { identifierSchema } from "../schemas/schema";
 

@@ -7,6 +7,7 @@ import { AppDataSource } from "./data-source";
 import potsRouter from "./routes/pots";
 import themesRouter from "./routes/themes";
 import partiesRouter from "./routes/parties";
+import budgetsRouter from "./routes/budgets";
 
 const app = express();
 app.use(bodyParser.json());
@@ -28,6 +29,7 @@ AppDataSource.initialize().then(async () => {
   app.use("/pots", potsRouter);
   app.use("/themes", themesRouter);
   app.use("/parties", partiesRouter);
+  app.use("/budgets", budgetsRouter);
 
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

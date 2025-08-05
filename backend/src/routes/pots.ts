@@ -8,7 +8,7 @@ import {
   deletePot,
 } from "../controllers/potController";
 import { validate } from "../middlewares/validate";
-import { potSchema } from "../schemas/potSchema";
+import { potSchema } from "../schemas/schema";
 
 import { identifierSchema } from "../schemas/schema";
 

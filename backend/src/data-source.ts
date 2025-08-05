@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 import { Pot } from "./entity/Pot";
 import { Theme } from "./entity/Theme";
 import { Party } from "./entity/Party";
+import { Budget } from "./entity/Budget";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -12,5 +13,5 @@ export const AppDataSource = new DataSource({
   database: "testdb",
   synchronize: true,
   logging: false,
-  entities: [Pot, Theme, Party],
+  entities: [Pot, Theme, Party, Budget],
 });

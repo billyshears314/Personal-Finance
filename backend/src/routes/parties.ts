@@ -8,7 +8,7 @@ import {
   deleteParty,
 } from "../controllers/partyController";
 import { validate } from "../middlewares/validate";
-import { partySchema } from "../schemas/partySchema";
+import { partySchema } from "../schemas/schema";
 
 import { identifierSchema } from "../schemas/schema";
 
