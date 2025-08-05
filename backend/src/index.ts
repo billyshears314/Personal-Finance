@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { Request, Response } from "express";
-import * as express from "express";
+import express from "express";
 import * as bodyParser from "body-parser";
 // import { AppRoutes } from "./routes";
 import { AppDataSource } from "./data-source";

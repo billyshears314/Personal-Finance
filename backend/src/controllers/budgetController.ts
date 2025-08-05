@@ -1,5 +1,5 @@
 import { AppDataSource } from "../data-source";
-import { Budget } from "../entity/Budget";
+import { Budget } from "../entities/Budget";
 import { Theme } from "../entity/Theme";
 import {
   createGetAll,
