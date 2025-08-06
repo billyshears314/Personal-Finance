@@ -11,6 +11,9 @@ import budgetsRouter from "./routes/budgets";
 import transactionsRouter from "./routes/transactions";
 import recurringBillsRouter from "./routes/recurringBills";
 import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
