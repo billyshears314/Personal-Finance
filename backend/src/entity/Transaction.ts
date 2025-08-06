@@ -17,7 +17,7 @@ export class Transaction {
   @Column({ type: "date" })
   date!: string;
 
-  @Column("numeric")
+  @Column("float")
   amount!: number;
 
   @OneToOne(() => Party, { eager: true })

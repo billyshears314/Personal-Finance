@@ -15,7 +15,7 @@ export class RecurringBill {
   @Column()
   dueDate!: string;
 
-  @Column("numeric")
+  @Column("float")
   amount!: number;
 
   @OneToOne(() => Party, { eager: true })

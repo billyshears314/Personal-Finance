@@ -6,6 +6,8 @@ import {
   createPot,
   updatePot,
   deletePot,
+  depositMoneyToPot,
+  withdrawMoneyFromPot,
 } from "../controllers/potController";
 import { validate } from "../middlewares/validate";
 import { potSchema } from "../schemas/schema";
@@ -20,5 +22,8 @@ potsRouter.post("/", validate(potSchema), createPot);
 // TODO: SHOULD VALIDATE PARAM AS WELL
 potsRouter.put("/:id", validate(potSchema), updatePot);
 potsRouter.delete("/:id", validate(identifierSchema, "params"), deletePot);
+
+potsRouter.post("/:id/deposit", depositMoneyToPot);
+potsRouter.post("/:id/withdraw", withdrawMoneyFromPot);
 
 export default potsRouter;

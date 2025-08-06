@@ -17,10 +17,10 @@ export class Budget {
   @Column({ unique: true })
   name!: string;
 
-  @Column("numeric")
+  @Column({ type: "float", default: 0 })
   spent!: number;
 
-  @Column("numeric")
+  @Column("float")
   max!: number;
 
   @OneToOne(() => Theme, { eager: true })

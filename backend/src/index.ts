@@ -10,20 +10,23 @@ import partiesRouter from "./routes/parties";
 import budgetsRouter from "./routes/budgets";
 import transactionsRouter from "./routes/transactions";
 import recurringBillsRouter from "./routes/recurringBills";
+import cors from "cors";
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // app.use(
 //   cors({
 //     origin: "http://localhost:3000", // 👈 Allow frontend origin
-//     credentials: true, // 👈 if using cookies or Authorization header
+//     // credentials: true, // 👈 if using cookies or Authorization header
 //   })
 // );
 
 AppDataSource.initialize().then(async () => {
-  const PORT = process.env.PORT || 3000;
+  // const PORT = process.env.PORT || 3000;
+  const PORT = 3001;
 
   app.use(express.json());
 

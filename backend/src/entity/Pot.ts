@@ -15,10 +15,10 @@ export class Pot {
   @Column({ unique: true })
   name!: string;
 
-  @Column("numeric")
+  @Column({ type: "float", default: 0 })
   saved!: number;
 
-  @Column("numeric")
+  @Column("float")
   target!: number;
 
   @OneToOne(() => Theme, { eager: true })
