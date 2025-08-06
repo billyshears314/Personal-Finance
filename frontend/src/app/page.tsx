@@ -1,18 +1,7 @@
 "use client";
 
-import React from "react";
-// import {
-//   Box,
-//   AppBar,
-//   Toolbar,
-//   IconButton,
-//   Typography,
-//   Card,
-//   CardContent,
-//   Button,
-// } from "@mui/material";
-// import MenuIcon from "@mui/icons-material/Menu";
-// import MoneyBlock from "../components/MoneyBlock";
+import React, { useEffect } from "react";
+import { useShallow } from "zustand/shallow";
 import {
   BudgetsCard,
   PotsCard,
@@ -28,7 +17,30 @@ const Home = () => {
   const balance = useAppStore((state) => state.balance);
   const income = useAppStore((state) => state.income);
   const expenses = useAppStore((state) => state.expenses);
-  const pots = useAppStore((state) => state.pots);
+  const { pots } = useAppStore(
+    useShallow((state) => ({
+      pots: state.pots,
+    }))
+  );
+
+  const { transactions } = useAppStore(
+    useShallow((state) => ({
+      transactions: state.transactions,
+    }))
+  );
+
+  // Only use up to 4 pots to display
+  const topPots = pots.slice(0, 4);
+
+  // Only use up to 5 transactions to display
+  const topTransactions = transactions.slice(0, 5);
+
+  const fetchOverview = useAppStore((state) => state.fetchOverview);
+  const totalSavedForPots = useAppStore((state) => state.getPotsTotalSaved());
+
+  useEffect(() => {
+    fetchOverview();
+  }, []);
 
   return (
     <ContentContainer title="Overview">
@@ -45,10 +57,10 @@ const Home = () => {
       </div>
       <div className="columns-2">
         <div className="mb-4">
-          <PotsCard pots={pots} />
+          <PotsCard pots={topPots} totalSaved={totalSavedForPots} />
         </div>
         <div className="mb-4 pb-20">
-          <TransactionsCard />
+          <TransactionsCard transactions={topTransactions} />
         </div>
         <div className="mb-4">
           <BudgetsCard />
@@ -58,81 +70,6 @@ const Home = () => {
         </div>
       </div>
     </ContentContainer>
-    // <div className="flex h-screen">
-    //   Main Content
-    //   <div className="flex-1 bg-gray-100">
-    //     {/* Top Bar */}
-    //     <AppBar position="static" className="bg-white shadow">
-    //       <Toolbar>
-    //         <IconButton
-    //           edge="start"
-    //           color="inherit"
-    //           aria-label="menu"
-    //           sx={{ mr: 2 }}
-    //         >
-    //           <MenuIcon />
-    //         </IconButton>
-    //         <Typography variant="h6" className="flex-1 text-gray-800">
-    //           Dashboard
-    //         </Typography>
-    //       </Toolbar>
-    //     </AppBar>
-
-    //     {/* Dashboard Content */}
-    //     <div className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-    //       {/* Widget 1 */}
-    //       <Card className="shadow">
-    //         <CardContent>
-    //           <Typography variant="h6" gutterBottom>
-    //             Widget 1
-    //           </Typography>
-    //           <Typography color="textSecondary">Some content here</Typography>
-    //         </CardContent>
-    //       </Card>
-
-    //       {/* Widget 2 */}
-    //       <Card className="shadow">
-    //         <CardContent>
-    //           <Typography variant="h6" gutterBottom>
-    //             Widget 2
-    //           </Typography>
-    //           <Typography color="textSecondary">Some content here</Typography>
-    //         </CardContent>
-    //       </Card>
-
-    //       {/* Widget 3 */}
-    //       <Card className="shadow">
-    //         <CardContent>
-    //           <Typography variant="h6" gutterBottom>
-    //             Widget 3
-    //           </Typography>
-    //           <Typography color="textSecondary">Some content here</Typography>
-    //         </CardContent>
-    //       </Card>
-
-    //       {/* Widget 4 */}
-    //       <Card className="shadow">
-    //         <CardContent>
-    //           <Typography variant="h6" gutterBottom>
-    //             Widget 4
-    //           </Typography>
-    //           <Typography color="textSecondary">Some content here</Typography>
-    //         </CardContent>
-    //       </Card>
-    //     </div>
-    //     <div className="p-6 flex flex-wrap">
-    //       <div className="w-full sm:w-1/2 lg:w-1/3 px-2">
-    //         <MoneyBlock label="Current Balance" value="$4,836.00" />
-    //       </div>
-    //       <div className="w-full sm:w-1/2 lg:w-1/3 px-2">
-    //         <MoneyBlock label="Income" value="$3,814.25" />
-    //       </div>
-    //       <div className="w-full sm:w-1/2 lg:w-1/3 px-2">
-    //         <MoneyBlock label="Expenses" value="$1,700.50" />
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

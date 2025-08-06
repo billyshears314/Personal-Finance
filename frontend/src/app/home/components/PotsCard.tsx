@@ -3,22 +3,13 @@
 import PreviewCard from "./PreviewCard";
 import MoneyChunk from "../../../components/MoneyChunk";
 import { Pot } from "@/types";
-// import { AppState, useAppStore } from "@/stores/useAppStore";
 
 interface PotsCardProps {
   pots: Pot[];
+  totalSaved: number;
 }
 
-const PotsCard = ({ pots }: PotsCardProps) => {
-  // const potData = useAppStore((state: AppState) => {
-  //   return {
-  //     totalSaved: state.getPotsTotalSaved(),
-  //     pots: pots.slice(0, 4),
-  //   };
-  // });
-
-  const potData: any = [];
-
+const PotsCard = ({ pots, totalSaved }: PotsCardProps) => {
   return (
     <PreviewCard title="Pots" detailsLink="/pots">
       <div className="flex gap-4">
@@ -29,17 +20,17 @@ const PotsCard = ({ pots }: PotsCardProps) => {
           <div>
             <div className="text-gray-500 mb-4">Total Saved</div>
             <div className="text-4xl font-bold text-gray-900 tracking-wider">
-              {`$${potData.totalSaved}`}
+              {`$${totalSaved}`}
             </div>
           </div>
         </div>
         <div className="w-3/5 flex flex-wrap">
-          {potData.length > 0 &&
-            potData.pots.map((pot: any) => {
+          {pots.length > 0 &&
+            pots.map((pot: Pot) => {
               return (
                 <div className="w-1/2 mb-2 h-1/2" key={pot.name}>
                   <MoneyChunk
-                    color="green"
+                    color={pot.theme.color || "red"}
                     name={pot.name}
                     amount={pot.saved}
                     showCents={false}

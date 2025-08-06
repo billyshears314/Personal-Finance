@@ -1,7 +1,12 @@
 import PreviewCard from "./PreviewCard";
 import TransactionAmount from "../../../components/TransactionAmount";
+import { Transaction } from "@/types";
 
-const TransactionsCard = () => {
+interface TransactionsCardProps {
+  transactions: Transaction[];
+}
+
+const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
   const row = (
     entityName: string,
     entityImageSrc: string,
@@ -36,7 +41,19 @@ const TransactionsCard = () => {
     >
       <table className="w-full">
         <tbody className="divide-y">
-          {row("Emma Richardson", "emma-richardson.jpg", 75.5, "19 Aug 2024")}
+          {transactions.map((transaction: Transaction) => {
+            return (
+              <>
+                {row(
+                  transaction.party.name,
+                  transaction.party.iconUrl,
+                  transaction.amount,
+                  transaction.date
+                )}
+              </>
+            );
+          })}
+          {/* {row("Emma Richardson", "emma-richardson.jpg", 75.5, "19 Aug 2024")}
           {row(
             "Savory Bites Bistro",
             "savory-bites-bistro.jpg",
@@ -45,7 +62,7 @@ const TransactionsCard = () => {
           )}
           {row("Daniel Carter", "daniel-carter.jpg", -42.3, "18 Aug 2024")}
           {row("Daniel Carter", "daniel-carter.jpg", -42.3, "18 Aug 2024")}
-          {row("Daniel Carter", "daniel-carter.jpg", -42.3, "18 Aug 2024")}
+          {row("Daniel Carter", "daniel-carter.jpg", -42.3, "18 Aug 2024")} */}
         </tbody>
       </table>
     </PreviewCard>
