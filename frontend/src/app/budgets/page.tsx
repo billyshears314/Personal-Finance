@@ -50,7 +50,7 @@ const BudgetPage = () => {
                     <SpendingCard
                       spent={budget.spent}
                       max={budget.max}
-                      color="green"
+                      color={budget.theme.color}
                     />
                   </div>
                 );

@@ -17,6 +17,7 @@ export interface AppState {
   error: string | null;
   fetchOverview: () => Promise<void>;
   fetchPots: () => Promise<void>;
+  createPot: (newPot: Omit<Pot, "id">) => Promise<void>;
   fetchBudgets: () => Promise<void>;
   fetchTransactions: () => Promise<void>;
   fetchRecurringBills: () => Promise<void>;
@@ -74,6 +75,23 @@ export const useAppStore = create<AppState>((set, get) => ({
         error.response?.data?.message ||
         error.message ||
         "Failed to fetch pots";
+      set({ error: message, loading: false });
+    }
+  },
+  createPot: async (newPot) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.post<Pot>(`${APIHost}/pots`, newPot);
+      // Append the new pot to the existing array
+      set((state) => ({
+        pots: [...state.pots, response.data],
+        loading: false,
+      }));
+    } catch (error: any) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to create pot";
       set({ error: message, loading: false });
     }
   },

@@ -8,7 +8,7 @@ interface PotCardProps {
   title: string;
   currentValue: number;
   target: number;
-  theme: string;
+  color: string;
 }
 
 const formatMoney = (amount: number): string => {
@@ -26,7 +26,7 @@ const PotCard: React.FC<PotCardProps> = ({
   title,
   currentValue,
   target,
-  theme,
+  color,
 }: PotCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addWithdrawType, setAddWithdrawType] = useState("");
@@ -40,7 +40,10 @@ const PotCard: React.FC<PotCardProps> = ({
   const bar = () => {
     return (
       <div className="my-2 h-2 w-full bg-beige-100 rounded-full">
-        <div className={`w-20 h-full bg-category-${theme} rounded-full`}></div>
+        <div
+          className={`w-20 h-full rounded-full`}
+          style={{ backgroundColor: color }}
+        ></div>
       </div>
     );
   };
@@ -61,7 +64,7 @@ const PotCard: React.FC<PotCardProps> = ({
     <>
       <div className="rounded-xl bg-white p-4">
         <div className="flex items-center">
-          <TitleWithDot title={title} theme={theme} />
+          <TitleWithDot title={title} color={color} />
           <div className="ml-auto">
             <img src="images/icon-ellipsis.svg" />
           </div>

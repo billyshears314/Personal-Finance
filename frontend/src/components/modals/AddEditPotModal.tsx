@@ -4,6 +4,7 @@ import Modal from "../Modal";
 import InputField from "./InputField";
 import Dropdown from "./Dropdown";
 import Button from "./Button";
+import { useAppStore } from "@/stores/useAppStore";
 
 type Mode = "add" | "edit";
 
@@ -24,11 +25,24 @@ export default function AddEditPotModal({
     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus  hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet.";
   const editDescription = "B";
 
+  const createPot = useAppStore((state) => state.createPot);
+
   const save = () => {
     console.log("SAVE");
     console.log("NAME: " + name);
     console.log("Target: " + target);
     console.log("Color Tag: " + colorTag);
+
+    if (!name || target === null) {
+      alert("Please fill out all fields");
+      return;
+    }
+
+    if (mode === "add") {
+      createPot({ name, saved: 0, target });
+    }
+
+    onClose();
   };
 
   const colorOptions = [

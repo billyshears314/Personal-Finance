@@ -80,7 +80,7 @@ const PotsPage = () => {
                     title={pot.name}
                     currentValue={pot.saved}
                     target={pot.target}
-                    theme={"green"}
+                    color={pot.theme.color}
                   />
                 </div>
               );

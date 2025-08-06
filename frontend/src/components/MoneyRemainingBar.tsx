@@ -15,8 +15,7 @@ const MoneyRemainingBar: React.FC<MoneyRemainingBarProps> = ({
   return (
     <div>
       <div className="text-sm mb-2 text-gray-500">
-        {/* Maximum of ${max.toFixed(2)} */}
-        {max}
+        Maximum of ${max.toFixed(2)}
       </div>
       <Bar color={color} value={100 * (spent / max)} />
       <div className="flex mt-2">
@@ -24,7 +23,11 @@ const MoneyRemainingBar: React.FC<MoneyRemainingBarProps> = ({
           <MoneyChunk color={color} name="Spent" amount={spent} />
         </div>
         <div className="w-1/2">
-          <MoneyChunk color="beige" name="Remaining" amount={max - spent} />
+          <MoneyChunk
+            color="beige"
+            name="Remaining"
+            amount={max - spent > 0 ? max - spent : 0}
+          />
         </div>
       </div>
     </div>

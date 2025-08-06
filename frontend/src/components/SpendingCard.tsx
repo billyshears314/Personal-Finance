@@ -14,7 +14,7 @@ const SpendingCard: React.FC<SpendingCardProps> = ({ spent, max, color }) => {
   return (
     <div className="p-8 rounded-xl bg-white">
       <div className="flex items-center mb-4">
-        <TitleWithDot title="Entertainment" theme={color} />
+        <TitleWithDot title="Entertainment" color={color} />
         <div className="ml-auto">
           <img src="images/icon-ellipsis.svg" />
         </div>

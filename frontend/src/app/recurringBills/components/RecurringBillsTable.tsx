@@ -25,8 +25,7 @@ const RecurringBillsTable = ({ recurringBills }: RecurringBillsTableProps) => {
         <td className="text-sm text-left">
           {dueDate} {status}
         </td>
-        {/* <td className="font-bold text-right">${amount.toFixed(2)}</td> */}
-        <td className="font-bold text-right">{typeof amount}</td>
+        <td className="font-bold text-right">${amount.toFixed(2)}</td>
       </tr>
     );
   };

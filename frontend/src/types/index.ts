@@ -3,6 +3,7 @@ export interface Budget {
   name: string;
   spent: number;
   max: number;
+  theme: Theme;
 }
 
 export interface Pot {
@@ -10,6 +11,7 @@ export interface Pot {
   name: string;
   saved: number;
   target: number;
+  theme: Theme;
 }
 
 export interface Entity {
@@ -39,4 +41,10 @@ export interface Party {
   id: number;
   name: string;
   iconUrl: string;
+}
+
+export interface Theme {
+  id: number;
+  name: string;
+  color: string;
 }
