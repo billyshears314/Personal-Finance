@@ -1,8 +1,9 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import "reflect-metadata";
-import { Request, Response } from "express";
 import express from "express";
 import * as bodyParser from "body-parser";
-// import { AppRoutes } from "./routes";
 import { AppDataSource } from "./data-source";
 import potsRouter from "./routes/pots";
 import themesRouter from "./routes/themes";
@@ -11,25 +12,14 @@ import budgetsRouter from "./routes/budgets";
 import transactionsRouter from "./routes/transactions";
 import recurringBillsRouter from "./routes/recurringBills";
 import cors from "cors";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000", // 👈 Allow frontend origin
-//     // credentials: true, // 👈 if using cookies or Authorization header
-//   })
-// );
-
 AppDataSource.initialize().then(async () => {
-  // const PORT = process.env.PORT || 3000;
-  const PORT = 3001;
+  const PORT = process.env.PORT || 3001;
 
   app.use(express.json());
 

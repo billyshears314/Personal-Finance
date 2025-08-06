@@ -6,8 +6,6 @@ import { Budget } from "./entity/Budget";
 import { Transaction } from "./entity/Transaction";
 import { RecurringBill } from "./entity/RecurringBill";
 
-console.log(JSON.stringify(process.env, null, 2));
-
 export const AppDataSource = new DataSource({
   type: "postgres",
   host: process.env.DB_HOST,
