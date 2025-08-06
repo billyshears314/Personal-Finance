@@ -7,25 +7,19 @@ interface RecurringBillsTableProps {
 }
 
 const RecurringBillsTable = ({ recurringBills }: RecurringBillsTableProps) => {
-  const row = (
-    billTitle: string,
-    billIcon: string,
-    dueDate: string,
-    amount: number,
-    status: paidStatus
-  ) => {
+  const row = (bill: RecurringBill, status: paidStatus) => {
     return (
-      <tr className="h-16">
+      <tr className="h-16" key={bill.id}>
         <td>
           <div className="flex items-center">
-            <img src={billIcon} className="w-8 rounded-full" />
-            <div className="font-bold ml-3">{billTitle}</div>
+            <img src={bill.party?.iconUrl} className="w-8 rounded-full" />
+            <div className="font-bold ml-3">{bill.party?.name}</div>
           </div>
         </td>
         <td className="text-sm text-left">
-          {dueDate} {status}
+          {bill.dueDate} {status}
         </td>
-        <td className="font-bold text-right">${amount.toFixed(2)}</td>
+        <td className="font-bold text-right">${bill.amount.toFixed(2)}</td>
       </tr>
     );
   };
@@ -48,24 +42,8 @@ const RecurringBillsTable = ({ recurringBills }: RecurringBillsTableProps) => {
         </thead>
         <tbody className="divide-y">
           {recurringBills.map((recurringBill) => {
-            return (
-              <>
-                {/* // <div key={recurringBill.id}> */}
-                {row(
-                  recurringBill.party.name,
-                  recurringBill.party.iconUrl,
-                  recurringBill.dueDate,
-                  recurringBill.amount,
-                  "paid"
-                )}
-                {/* // </div> */}
-              </>
-            );
+            return <>{row(recurringBill, "paid")}</>;
           })}
-          {/* // {row("Spark Electric Solutions", "Monthly-2nd", 100.0, "paid")}
-          // {row("Serenity Spa & Wellness", "Monthly-3rd", 30.0, "paid")}
-          // {row("Nimbus Data Storage", "Monthly-21st", 9.99, "overdue")}
-          // {row("EcoFuel Energy", "Monthly-29th", 35.0, "due")} */}
         </tbody>
       </table>
     </div>

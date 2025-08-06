@@ -1,64 +1,77 @@
 import { ReactNode, useEffect, useState } from "react";
+import { useShallow } from "zustand/shallow";
 import ReactDOM from "react-dom";
 import Modal from "../Modal";
 import InputField from "./InputField";
-import Dropdown from "./Dropdown";
+import DropdownWithColor from "./DropdownWithColor";
 import Button from "./Button";
 import { useAppStore } from "@/stores/useAppStore";
+import { Pot } from "@/types";
 
 type Mode = "add" | "edit";
 
 interface AddEditPotModalProps {
   onClose: () => void;
   mode?: Mode;
+  pot?: Pot;
 }
+
+const capitalizeEachWord = (str: string) => {
+  return str.replace(/\b\w/g, (char) => char.toUpperCase());
+};
 
 export default function AddEditPotModal({
   onClose,
   mode = "add",
+  pot,
 }: AddEditPotModalProps) {
-  const [name, setName] = useState("");
-  const [target, setTarget] = useState<number | null>(null);
-  const [colorTag, setColorTag] = useState("");
+  const [name, setName] = useState(pot?.name || "");
+  const [target, setTarget] = useState<number | null>(pot?.target || null);
+  const [colorTag, setColorTag] = useState<number | null>(
+    pot?.theme?.id || null
+  );
 
   const addDescription =
     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus  hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet.";
-  const editDescription = "B";
+  const editDescription = "Edit";
 
   const createPot = useAppStore((state) => state.createPot);
 
-  const save = () => {
-    console.log("SAVE");
-    console.log("NAME: " + name);
-    console.log("Target: " + target);
-    console.log("Color Tag: " + colorTag);
+  const { themes, fetchThemes, loading, error } = useAppStore(
+    useShallow((state) => ({
+      themes: state.themes,
+      fetchThemes: state.fetchThemes,
+      loading: state.loading,
+      error: state.error,
+    }))
+  );
 
+  useEffect(() => {
+    fetchThemes();
+  }, [fetchThemes]);
+
+  useEffect(() => {});
+
+  const save = () => {
     if (!name || target === null) {
       alert("Please fill out all fields");
       return;
     }
 
-    if (mode === "add") {
-      createPot({ name, saved: 0, target });
+    if (mode === "add" && colorTag) {
+      createPot({ name, saved: 0, target, theme: { id: colorTag } });
     }
 
     onClose();
   };
 
-  const colorOptions = [
-    {
-      label: "Green",
-      value: "green",
-    },
-    {
-      label: "Red",
-      value: "red",
-    },
-    {
-      label: "Blue",
-      value: "blue",
-    },
-  ];
+  const colorOptions = themes.map((theme) => {
+    return {
+      label: capitalizeEachWord(theme.name || "Unknown"),
+      value: theme.id,
+      color: theme.color || "red",
+    };
+  });
 
   return (
     <Modal
@@ -70,18 +83,20 @@ export default function AddEditPotModal({
         label="Pot Name"
         placeholderText="e.g. Rainy Days"
         onChange={(value) => setName(value)}
+        initialValue={name}
         maxCharacters={30}
       />
       <InputField
         label="Target"
         type="number"
         placeholderText="e.g. 2000"
-        onChange={(value) => setTarget(value)}
+        initialValue={target ? target.toString() : ""}
+        onChange={(value) => setTarget(parseFloat(value))}
       />
-      <Dropdown
+      <DropdownWithColor
         label="Color Tag"
         options={colorOptions}
-        onChange={(value) => setColorTag(value)}
+        onChange={(value) => setColorTag(value as number)}
       />
       <Button
         text={mode === "add" ? "Add Pot" : "Save Changes"}

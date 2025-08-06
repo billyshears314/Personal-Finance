@@ -22,7 +22,6 @@ export interface Entity {
 
 export interface Transaction {
   id: number;
-  entity: Entity;
   category: string;
   date: string;
   amount: number;
@@ -31,7 +30,6 @@ export interface Transaction {
 
 export interface RecurringBill {
   id: number;
-  entity: Entity;
   dueDate: string;
   amount: number;
   party: Party;
@@ -45,6 +43,6 @@ export interface Party {
 
 export interface Theme {
   id: number;
-  name: string;
-  color: string;
+  name?: string;
+  color?: string;
 }

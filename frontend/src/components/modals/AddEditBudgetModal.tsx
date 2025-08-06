@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import Modal from "../Modal";
 import InputField from "./InputField";
-import Dropdown from "./Dropdown";
+import Dropdown from "./DropdownWithColor";
 import Button from "./Button";
 
 type Mode = "add" | "edit";
@@ -18,7 +18,7 @@ export default function AddEditBudgetModal({
 }: AddEditBudgetModalProps) {
   const [budgetCategory, setBudgetCategory] = useState("");
   const [maximumSpend, setMaximumSpend] = useState<number | null>(null);
-  const [theme, setTheme] = useState("");
+  const [theme, setTheme] = useState<number | null>();
 
   const addDescription =
     "Create a pot to set savings targets. These can help keep you on track as you save for special purchases.";
@@ -54,15 +54,18 @@ export default function AddEditBudgetModal({
   const themeOptions = [
     {
       label: "Green",
-      value: "green",
+      value: 1,
+      color: "red",
     },
     {
       label: "Red",
-      value: "red",
+      value: 2,
+      color: "red",
     },
     {
       label: "Blue",
-      value: "blue",
+      value: 3,
+      color: "red",
     },
   ];
 
@@ -75,7 +78,7 @@ export default function AddEditBudgetModal({
       <Dropdown
         label="Budget Category"
         options={budgetCategoryOptions}
-        onChange={(value) => setBudgetCategory(value)}
+        onChange={(value) => setBudgetCategory(value as string)}
       />
       <InputField
         label="Maximum Spend"
@@ -86,7 +89,7 @@ export default function AddEditBudgetModal({
       <Dropdown
         label="Theme"
         options={themeOptions}
-        onChange={(value) => setTheme(value)}
+        onChange={(value) => setTheme(value as number)}
       />
       <Button
         text={mode === "add" ? "Add Budget" : "Save Changes"}

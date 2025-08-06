@@ -3,12 +3,13 @@ import { useState } from "react";
 import TitleWithDot from "../../../components/TitleWithDot";
 import Button from "../../../components/Button";
 import AddWithdrawToPotModal from "@/components/modals/AddWithdrawToPotModal";
+import AddEditPotModal from "@/components/modals/AddEditPotModal";
+import { Pot } from "@/types";
+
+type ModalType = "add" | "withdraw" | "edit" | "delete" | null;
 
 interface PotCardProps {
-  title: string;
-  currentValue: number;
-  target: number;
-  color: string;
+  pot: Pot;
 }
 
 const formatMoney = (amount: number): string => {
@@ -19,53 +20,47 @@ const formatMoney = (amount: number): string => {
 };
 
 const calculatePercent = (amount: number, target: number) => {
-  return `${(100 * (amount / target)).toFixed(2)}%`;
+  return 100 * (amount / target);
 };
 
-const PotCard: React.FC<PotCardProps> = ({
-  title,
-  currentValue,
-  target,
-  color,
-}: PotCardProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [addWithdrawType, setAddWithdrawType] = useState("");
-  const [potNameOpened, setPotNameOpened] = useState("");
+const formatPercent = (percent: number) => {
+  return `${percent.toFixed(2)}%`;
+};
 
-  const handleAddNewPot = () => {
-    console.log("HANDLE ADD NEW POT");
-    setIsModalOpen(true);
-  };
+const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
+  const [modalType, setModalType] = useState<ModalType>(null);
 
-  const bar = () => {
+  const bar = (color: string, percent: number) => {
     return (
       <div className="my-2 h-2 w-full bg-beige-100 rounded-full">
         <div
-          className={`w-20 h-full rounded-full`}
-          style={{ backgroundColor: color }}
+          className={`h-full rounded-full`}
+          style={{ width: percent + "%", backgroundColor: color }}
         ></div>
       </div>
     );
   };
 
   const handleAddOpen = (potName: string) => {
-    setPotNameOpened(potName);
-    setAddWithdrawType("add");
-    setIsModalOpen(true);
+    setModalType("add");
   };
 
   const handleWithdrawOpen = (potName: string) => {
-    setPotNameOpened(potName);
-    setAddWithdrawType("withdraw");
-    setIsModalOpen(true);
+    setModalType("withdraw");
   };
+
+  const handleOpenDots = () => {
+    setModalType("edit");
+  };
+
+  const percentOfTarget = calculatePercent(pot.saved, pot.target);
 
   return (
     <>
       <div className="rounded-xl bg-white p-4">
         <div className="flex items-center">
-          <TitleWithDot title={title} color={color} />
-          <div className="ml-auto">
+          <TitleWithDot title={pot.name} color={pot.theme.color || "red"} />
+          <div className="ml-auto cursor-pointer" onClick={handleOpenDots}>
             <img src="images/icon-ellipsis.svg" />
           </div>
         </div>
@@ -73,16 +68,18 @@ const PotCard: React.FC<PotCardProps> = ({
           <div className="flex items-center">
             <div className="text-base text-gray-500">Total Saved</div>
             <div className="text-3xl text-gray-900 ml-auto font-bold">
-              {formatMoney(currentValue)}
+              {formatMoney(pot.saved)}
             </div>
           </div>
-          <div className="">{bar()}</div>
+          <div className="">
+            {bar(pot.theme.color || "red", percentOfTarget)}
+          </div>
           <div className="flex">
             <div className="text-sm text-gray-500">
-              {calculatePercent(currentValue, target)}
+              {formatPercent(percentOfTarget)}
             </div>
             <div className="text-sm text-gray-500 ml-auto">
-              Target of {formatMoney(target)}
+              Target of {formatMoney(pot.target)}
             </div>
           </div>
         </div>
@@ -92,7 +89,7 @@ const PotCard: React.FC<PotCardProps> = ({
               type="secondary"
               text="+ Add Money"
               fullWidth
-              onClick={() => handleAddOpen(title)}
+              onClick={() => handleAddOpen(pot.name)}
             />
           </div>
           <div className="w-1/2">
@@ -100,16 +97,23 @@ const PotCard: React.FC<PotCardProps> = ({
               type="secondary"
               text="Withdraw"
               fullWidth
-              onClick={() => handleWithdrawOpen(title)}
+              onClick={() => handleWithdrawOpen(pot.name)}
             />
           </div>
         </div>
       </div>
-      {isModalOpen && (
+      {(modalType === "add" || modalType === "withdraw") && (
         <AddWithdrawToPotModal
-          type={addWithdrawType}
-          potName={potNameOpened}
-          onClose={() => setIsModalOpen(false)}
+          type={modalType}
+          pot={pot}
+          onClose={() => setModalType(null)}
+        />
+      )}
+      {modalType === "edit" && (
+        <AddEditPotModal
+          mode={modalType}
+          pot={pot}
+          onClose={() => setModalType(null)}
         />
       )}
     </>

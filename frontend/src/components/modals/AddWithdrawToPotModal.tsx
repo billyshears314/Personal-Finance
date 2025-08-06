@@ -2,29 +2,42 @@ import { useState } from "react";
 
 import Modal from "../Modal";
 import InputField from "./InputField";
-import Dropdown from "./Dropdown";
+import Dropdown from "./DropdownWithColor";
 import Button from "./Button";
+import { useAppStore } from "@/stores/useAppStore";
+import { Pot } from "@/types";
 
 interface AddWithdrawToPotModalProps {
   /* TODO Make type a real type instead of string */
   type: string;
-  potName: string;
+  pot: Pot;
   onClose: () => void;
 }
 
 export default function AddWithdrawToPotModal({
   type,
-  potName,
+  pot,
   onClose,
 }: AddWithdrawToPotModalProps) {
   const [amount, setAmount] = useState(null);
 
   const title =
-    type === "add" ? `Add to '${potName}'` : `Withdraw from '${potName}'`;
+    type === "add" ? `Add to '${pot.name}'` : `Withdraw from '${pot.name}'`;
   const description = type === "add" ? "" : "";
 
+  const depositMoneyToPot = useAppStore((state) => state.depositMoneyToPot);
+  const withdrawMoneyFromPot = useAppStore(
+    (state) => state.withdrawMoneyFromPot
+  );
+
   const confirm = () => {
-    console.log("CONFIRM");
+    if (!amount) return;
+    if (type === "add") {
+      depositMoneyToPot(pot.id, amount);
+    } else {
+      withdrawMoneyFromPot(pot.id, amount);
+    }
+    onClose();
   };
 
   return (

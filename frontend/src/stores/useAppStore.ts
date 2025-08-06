@@ -1,7 +1,7 @@
 import axios from "axios";
 import { init } from "next/dist/compiled/webpack/webpack";
 import { create } from "zustand";
-import { Pot, Budget, Transaction, RecurringBill } from "@/types";
+import { Pot, Budget, Transaction, RecurringBill, Theme } from "@/types";
 
 const APIHost = "http://localhost:3001";
 
@@ -13,6 +13,7 @@ export interface AppState {
   pots: Pot[];
   transactions: Transaction[];
   recurringBills: RecurringBill[];
+  themes: Theme[];
   loading: boolean;
   error: string | null;
   fetchOverview: () => Promise<void>;
@@ -21,6 +22,9 @@ export interface AppState {
   fetchBudgets: () => Promise<void>;
   fetchTransactions: () => Promise<void>;
   fetchRecurringBills: () => Promise<void>;
+  fetchThemes: () => Promise<void>;
+  depositMoneyToPot: (potId: number, amount: number) => Promise<void>;
+  withdrawMoneyFromPot: (potId: number, amount: number) => Promise<void>;
   getPotsTotalSaved: () => number;
 }
 
@@ -32,6 +36,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   pots: [],
   transactions: [],
   recurringBills: [],
+  themes: [],
   loading: false,
   error: null,
   getPotsTotalSaved: () => {
@@ -136,6 +141,37 @@ export const useAppStore = create<AppState>((set, get) => ({
         error.message ||
         "Failed to fetch recurring bills";
       set({ error: message, loading: false });
+    }
+  },
+  fetchThemes: async () => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.get<Pot[]>(`${APIHost}/themes`);
+      set({ themes: response.data, loading: false });
+    } catch (error: any) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to fetch themes";
+      set({ error: message, loading: false });
+    }
+  },
+  depositMoneyToPot: async (potId: number, amount: number) => {
+    try {
+      await axios.post(`${APIHost}/pots/${potId}/deposit`, { amount });
+      await get().fetchPots();
+    } catch (error) {
+      console.error("Deposit failed:", error);
+      throw error; // Re-throw so components can handle it too
+    }
+  },
+  withdrawMoneyFromPot: async (potId: number, amount: number) => {
+    try {
+      await axios.post(`${APIHost}/pots/${potId}/withdraw`, { amount });
+      await get().fetchPots();
+    } catch (error) {
+      console.error("Withdrawal failed:", error);
+      throw error;
     }
   },
 }));
