@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 import Pagination from "@mui/material/Pagination";
 import TransactionSearchBar from "./components/TransactionSearchBar";
@@ -10,8 +11,14 @@ import { useAppStore } from "@/stores/useAppStore";
 import { debounce } from "lodash";
 
 const TransactionsPage = () => {
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const [search, setSearch] = useState(searchParams.get("search") || "");
+  const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
+  const [categoryFilter, setCategoryFilter] = useState(
+    searchParams.get("category") || ""
+  );
 
   const { transactions, fetchTransactions, loading, error } = useAppStore(
     useShallow((state) => ({
@@ -24,23 +31,78 @@ const TransactionsPage = () => {
 
   // Debounce the fetchTransactions call itself
   const debouncedFetch = useCallback(
-    debounce((page: number, search: string) => {
-      fetchTransactions({ page, search });
+    debounce((page: number, search: string, categoryFilter: string) => {
+      fetchTransactions({ page, search, categoryFilter: categoryFilter });
     }, 300),
     [fetchTransactions]
   );
 
-  // Trigger fetch when page or search changes
+  // Debounced fetch for search only
+  const debouncedFetchBySearch = useCallback(
+    debounce((searchValue: string) => {
+      fetchTransactions({ page, search: searchValue, categoryFilter });
+    }, 300),
+    [fetchTransactions, page, categoryFilter]
+  );
+
+  // Trigger immediate fetch when page or categoryFilter changes
   useEffect(() => {
-    debouncedFetch(page, search);
-    return debouncedFetch.cancel; // Clean up on unmount/change
-  }, [page, search, debouncedFetch]);
+    fetchTransactions({ page, search, categoryFilter });
+  }, [page, categoryFilter, fetchTransactions]);
+
+  // Trigger debounced fetch when search changes
+  useEffect(() => {
+    debouncedFetchBySearch(search);
+    return debouncedFetchBySearch.cancel;
+  }, [search, debouncedFetchBySearch]);
+
+  useEffect(() => {
+    updateUrlParams({ search, page, category: categoryFilter });
+  }, [search, page, categoryFilter]);
+
+  // TODO: Any way to simplify or separate any of this logic
+  const updateUrlParams = (newParams: {
+    search?: string;
+    page?: number;
+    category?: string;
+  }) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (newParams.search !== undefined) {
+      if (newParams.search === "") {
+        params.delete("search");
+      } else {
+        params.set("search", newParams.search);
+      }
+    }
+
+    if (newParams.page !== undefined) {
+      if (newParams.page === 1) {
+        params.delete("page");
+      } else {
+        params.set("page", newParams.page.toString());
+      }
+    }
+
+    if (newParams.category !== undefined) {
+      if (newParams.category === "") {
+        params.delete("category");
+      } else {
+        params.set("category", newParams.category);
+      }
+    }
+
+    router.push(`?${params.toString()}`);
+  };
 
   return (
     <ContentContainer title="Transactions">
       <div className="bg-white p-6">
         <TransactionSearchBar
-          onChange={(search: string) => setSearch(search)}
+          onSearchChange={(search: string) => setSearch(search)}
+          onCategoryFilterChange={(category: string) =>
+            setCategoryFilter(category)
+          }
           search={search}
         />
         {loading && transactions.length === 0 ? (

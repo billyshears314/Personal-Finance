@@ -23,7 +23,7 @@ interface PaginationOptions {
   search?: string;
   page?: number;
   limit?: number;
-  budget?: string;
+  categoryFilter?: string;
 }
 
 export interface AppState {
@@ -141,13 +141,13 @@ export const useAppStore = create<AppState>((set, get) => ({
     search = "",
     page = 1,
     limit = 10,
-    budget = "",
+    categoryFilter = "",
   }) => {
     set({ loading: true, error: null });
     try {
       const response = await axios.get<FetchTransactionsResult>(
         `${APIHost}/transactions`,
-        { params: { search, page, limit, budget } }
+        { params: { search, page, limit, budget: categoryFilter } }
       );
 
       const results = response.data;

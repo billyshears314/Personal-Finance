@@ -5,6 +5,7 @@ import Dropdown from "../../../components/Dropdown";
 interface TransactionSearchBarProps {
   search?: string;
   onSearchChange: (value: string) => void;
+  onCategoryFilterChange: (value: string) => void;
 }
 
 const sortBy = {
@@ -42,7 +43,7 @@ const category = {
   options: [
     {
       label: "All transactions",
-      value: "all",
+      value: "",
     },
     {
       label: "Entertainment",
@@ -58,7 +59,7 @@ const category = {
     },
     {
       label: "Dining Out",
-      value: "dining_out",
+      value: "Dining Out",
     },
     {
       label: "Transportation",
@@ -66,13 +67,14 @@ const category = {
     },
     {
       label: "Personal Care",
-      value: "personal_care",
+      value: "Personal Care",
     },
   ],
 };
 
 const TransactionSearchBar: React.FC<TransactionSearchBarProps> = ({
   onSearchChange,
+  onCategoryFilterChange,
   search,
 }) => {
   return (
@@ -84,7 +86,10 @@ const TransactionSearchBar: React.FC<TransactionSearchBarProps> = ({
       />
       <div className="flex items-center gap-4">
         <Dropdown {...sortBy} />
-        <Dropdown {...category} />
+        <Dropdown
+          {...category}
+          onChange={(e) => onCategoryFilterChange(e.target.value)}
+        />
       </div>
     </div>
   );
