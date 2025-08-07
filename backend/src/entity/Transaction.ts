@@ -24,6 +24,6 @@ export class Transaction {
   @JoinColumn()
   party!: Party;
 
-  @ManyToOne(() => Budget, (budget) => budget.transactions)
-  budget: Budget;
+  @ManyToOne(() => Budget, (budget) => budget.transactions, { eager: true })
+  budget!: Budget;
 }

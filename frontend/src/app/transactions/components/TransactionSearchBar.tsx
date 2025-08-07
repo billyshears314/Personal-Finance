@@ -2,7 +2,10 @@
 import SearchBar from "../../../components/SearchBar";
 import Dropdown from "../../../components/Dropdown";
 
-interface TransactionSearchBarProps {}
+interface TransactionSearchBarProps {
+  search?: string;
+  onSearchChange: (value: string) => void;
+}
 
 const sortBy = {
   label: "Sort by",
@@ -68,10 +71,17 @@ const category = {
   ],
 };
 
-const TransactionSearchBar: React.FC<TransactionSearchBarProps> = () => {
+const TransactionSearchBar: React.FC<TransactionSearchBarProps> = ({
+  onSearchChange,
+  search,
+}) => {
   return (
     <div className="flex w-full mb-4">
-      <SearchBar placeholderText="Search Transaction" />
+      <SearchBar
+        placeholderText="Search Transaction"
+        onChange={onSearchChange}
+        value={search}
+      />
       <div className="flex items-center gap-4">
         <Dropdown {...sortBy} />
         <Dropdown {...category} />

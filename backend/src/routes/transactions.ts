@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import {
-  getAllTransactions,
+  getPaginatedTransactions,
   getTransactionByID,
   createTransaction,
   updateTransaction,
@@ -14,7 +14,7 @@ import { identifierSchema } from "../schemas/schema";
 
 const transactionsRouter = Router();
 
-transactionsRouter.get("/", getAllTransactions);
+transactionsRouter.get("/", getPaginatedTransactions);
 transactionsRouter.get(
   "/:id",
   validate(identifierSchema, "params"),

@@ -1,5 +1,4 @@
 import React from "react";
-import Searchbar from "../../../components/SearchBar";
 import TransactionAmount from "../../../components/TransactionAmount";
 import { Transaction } from "@/types";
 
@@ -60,18 +59,19 @@ const Table: React.FC<TableProps> = ({ transactions }) => {
           </tr>
         </thead>
         <tbody className="divide-y">
-          {transactions.map((transaction) => {
-            return (
-              <Row
-                entityName={transaction.party.name}
-                entityIcon={transaction.party.iconUrl}
-                category={transaction.budget.name}
-                transactionDate={transaction.date}
-                amount={transaction.amount}
-                key={transaction.id}
-              />
-            );
-          })}
+          {transactions.length > 0 &&
+            transactions.map((transaction) => {
+              return (
+                <Row
+                  entityName={transaction.party.name}
+                  entityIcon={transaction.party.iconUrl}
+                  category={transaction.budget.name}
+                  transactionDate={transaction.date}
+                  amount={transaction.amount}
+                  key={transaction.id}
+                />
+              );
+            })}
         </tbody>
       </table>
     </div>

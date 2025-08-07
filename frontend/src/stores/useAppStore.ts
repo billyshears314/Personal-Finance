@@ -5,6 +5,27 @@ import { Pot, Budget, Transaction, RecurringBill, Theme } from "@/types";
 
 const APIHost = "http://localhost:3001";
 
+// TODO: Fix, this is odd
+type PaginationMetaDataType = PaginationMetaData | null;
+
+interface PaginationMetaData {
+  total: number;
+  page: number;
+  lastPage: number;
+}
+
+interface FetchTransactionsResult {
+  data: Transaction[];
+  meta: PaginationMetaData;
+}
+
+interface PaginationOptions {
+  search?: string;
+  page?: number;
+  limit?: number;
+  budget?: string;
+}
+
 export interface AppState {
   balance: number;
   income: number;
@@ -20,7 +41,9 @@ export interface AppState {
   fetchPots: () => Promise<void>;
   createPot: (newPot: Omit<Pot, "id">) => Promise<void>;
   fetchBudgets: () => Promise<void>;
-  fetchTransactions: () => Promise<void>;
+  fetchTransactions: (
+    paginationOptions: PaginationOptions
+  ) => Promise<PaginationMetaDataType>;
   fetchRecurringBills: () => Promise<void>;
   fetchThemes: () => Promise<void>;
   depositMoneyToPot: (potId: number, amount: number) => Promise<void>;
@@ -39,6 +62,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   themes: [],
   loading: false,
   error: null,
+  paginationData: null,
   getPotsTotalSaved: () => {
     const pots = get().pots;
     return pots.reduce((sum: number, pot: Pot) => sum + pot.saved, 0);
@@ -113,19 +137,30 @@ export const useAppStore = create<AppState>((set, get) => ({
       set({ error: message, loading: false });
     }
   },
-  fetchTransactions: async () => {
+  fetchTransactions: async ({
+    search = "",
+    page = 1,
+    limit = 10,
+    budget = "",
+  }) => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.get<Transaction[]>(
-        `${APIHost}/transactions`
+      const response = await axios.get<FetchTransactionsResult>(
+        `${APIHost}/transactions`,
+        { params: { search, page, limit, budget } }
       );
-      set({ transactions: response.data, loading: false });
+
+      const results = response.data;
+
+      set({ transactions: results.data, loading: false });
+      return results.meta;
     } catch (error: any) {
       const message =
         error.response?.data?.message ||
         error.message ||
         "Failed to fetch transactions";
       set({ error: message, loading: false });
+      return null;
     }
   },
   fetchRecurringBills: async () => {
