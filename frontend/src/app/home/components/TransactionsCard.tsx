@@ -6,33 +6,32 @@ interface TransactionsCardProps {
   transactions: Transaction[];
 }
 
-const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
-  const row = (
-    entityName: string,
-    entityImageSrc: string,
-    amount: number,
-    transactionDate: string
-  ) => {
-    return (
-      <tr className="h-[67.5px]">
-        <td className="w-10">
-          <img
-            src={`images/avatars/${entityImageSrc}`}
-            width={40}
-            className="rounded-full"
-          />
-        </td>
-        <td className="font-bold pl-4">{entityName}</td>
-        <td className="text-right">
-          <div>
-            <TransactionAmount amount={amount} />
-          </div>
-          <div className="text-sm text-gray-500">{transactionDate}</div>
-        </td>
-      </tr>
-    );
-  };
+interface TransactionRowProps {
+  transaction: Transaction;
+}
 
+const TransactionRow = ({ transaction }: TransactionRowProps) => {
+  return (
+    <tr className="h-[67.5px]" key={transaction.id}>
+      <td className="w-10">
+        <img
+          src={transaction.party.iconUrl}
+          width={40}
+          className="rounded-full"
+        />
+      </td>
+      <td className="font-bold pl-4">{transaction.party.name}</td>
+      <td className="text-right">
+        <div>
+          <TransactionAmount amount={transaction.amount} />
+        </div>
+        <div className="text-sm text-gray-500">{transaction.date}</div>
+      </td>
+    </tr>
+  );
+};
+
+const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
   return (
     <PreviewCard
       title="Transactions"
@@ -42,27 +41,8 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
       <table className="w-full">
         <tbody className="divide-y">
           {transactions.map((transaction: Transaction) => {
-            return (
-              <>
-                {row(
-                  transaction.party.name,
-                  transaction.party.iconUrl,
-                  transaction.amount,
-                  transaction.date
-                )}
-              </>
-            );
+            return <TransactionRow transaction={transaction} />;
           })}
-          {/* {row("Emma Richardson", "emma-richardson.jpg", 75.5, "19 Aug 2024")}
-          {row(
-            "Savory Bites Bistro",
-            "savory-bites-bistro.jpg",
-            -55.5,
-            "19 Aug 2024"
-          )}
-          {row("Daniel Carter", "daniel-carter.jpg", -42.3, "18 Aug 2024")}
-          {row("Daniel Carter", "daniel-carter.jpg", -42.3, "18 Aug 2024")}
-          {row("Daniel Carter", "daniel-carter.jpg", -42.3, "18 Aug 2024")} */}
         </tbody>
       </table>
     </PreviewCard>

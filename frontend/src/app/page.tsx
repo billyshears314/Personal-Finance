@@ -29,11 +29,20 @@ const Home = () => {
     }))
   );
 
+  const { budgets } = useAppStore(
+    useShallow((state) => ({
+      budgets: state.budgets,
+    }))
+  );
+
   // Only use up to 4 pots to display
   const topPots = pots.slice(0, 4);
 
   // Only use up to 5 transactions to display
   const topTransactions = transactions.slice(0, 5);
+
+  // Only use up to 4 budgets to display
+  const topBudgets = budgets.slice(0, 4);
 
   const fetchOverview = useAppStore((state) => state.fetchOverview);
   const totalSavedForPots = useAppStore((state) => state.getPotsTotalSaved());
@@ -63,7 +72,7 @@ const Home = () => {
           <TransactionsCard transactions={topTransactions} />
         </div>
         <div className="mb-4">
-          <BudgetsCard />
+          <BudgetsCard budgets={topBudgets} />
         </div>
         <div className="mb-4">
           <RecurringBillsCard />

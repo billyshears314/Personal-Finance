@@ -1,7 +1,12 @@
 import PreviewCard from "./PreviewCard";
 import { Donut, MoneyChunk } from "../../../components";
+import { Budget } from "@/types";
 
-const BudgetsCard = () => {
+interface BudgetsCardProps {
+  budgets: Budget[];
+}
+
+const BudgetsCard = ({ budgets }: BudgetsCardProps) => {
   return (
     <PreviewCard title="Budgets" detailsLink="/budgets">
       <div className="flex gap-4">
@@ -15,10 +20,16 @@ const BudgetsCard = () => {
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <MoneyChunk color="#82C9D7" name="Bills" amount={750.0} />
-          <MoneyChunk color="#626070" name="Personal Care" amount={100.0} />
-          <MoneyChunk color="#F2CDAC" name="Dining Out" amount={75.0} />
-          <MoneyChunk color="#277C78" name="Entertainment" amount={50.0} />
+          {budgets.map((budget) => {
+            return (
+              <MoneyChunk
+                color={budget.theme.color || "red"}
+                name={budget.name}
+                amount={budget.spent}
+                key={budget.id}
+              />
+            );
+          })}
         </div>
       </div>
     </PreviewCard>
