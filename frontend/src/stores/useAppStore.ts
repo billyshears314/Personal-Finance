@@ -82,12 +82,18 @@ export const useAppStore = create<AppState>((set, get) => ({
         throw new Error("Failed to fetch one or more resources");
       }
 
-      const [pots, budgets, transactions, recurringBills] = await Promise.all([
-        potRes.json(),
-        budgetRes.json(),
-        transactionRes.json(),
-        recurringBillRes.json(),
-      ]);
+      const [pots, budgets, transactionsPaginationData, recurringBills] =
+        await Promise.all([
+          potRes.json(),
+          budgetRes.json(),
+          transactionRes.json(),
+          recurringBillRes.json(),
+        ]);
+
+      // TODO: Kind of awkward
+      const transactions = (
+        transactionsPaginationData as FetchTransactionsResult
+      ).data;
 
       set({ pots, budgets, transactions, recurringBills, loading: false });
     } catch (err: any) {

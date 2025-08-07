@@ -41,7 +41,9 @@ const TransactionsCard = ({ transactions }: TransactionsCardProps) => {
       <table className="w-full">
         <tbody className="divide-y">
           {transactions.map((transaction: Transaction) => {
-            return <TransactionRow transaction={transaction} />;
+            return (
+              <TransactionRow transaction={transaction} key={transaction.id} />
+            );
           })}
         </tbody>
       </table>

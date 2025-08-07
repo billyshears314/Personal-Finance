@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { useShallow } from "zustand/shallow";
 import PotCard from "./components/PotCard";
-import Button from "../../components/Button";
 import ContentContainer from "../../components/ContentContainer";
 import AddEditPotModal from "../../components/modals/AddEditPotModal";
 import { useAppStore } from "@/stores/useAppStore";
