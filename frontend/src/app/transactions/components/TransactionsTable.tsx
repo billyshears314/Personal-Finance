@@ -65,7 +65,7 @@ const Table: React.FC<TableProps> = ({ transactions }) => {
               <Row
                 entityName={transaction.party.name}
                 entityIcon={transaction.party.iconUrl}
-                category="General"
+                category={transaction.budget.name}
                 transactionDate={transaction.date}
                 amount={transaction.amount}
                 key={transaction.id}

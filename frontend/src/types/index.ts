@@ -22,10 +22,10 @@ export interface Entity {
 
 export interface Transaction {
   id: number;
-  category: string;
   date: string;
   amount: number;
   party: Party;
+  budget: Budget;
 }
 
 export interface RecurringBill {

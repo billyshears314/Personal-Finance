@@ -38,45 +38,6 @@ const PotsCard = ({ pots, totalSaved }: PotsCardProps) => {
                 </div>
               );
             })}
-          {/* <MoneyChunk
-              color="green"
-              name="Savings"
-              amount={159}
-              showCents={false}
-            /> */}
-          {/* </div> */}
-          {/* <div className="w-1/2 mb-2 h-1/2">
-            <MoneyChunk
-              color="green"
-              name="Savings"
-              amount={159}
-              showCents={false}
-            />
-          </div>
-          <div className="w-1/2 mb-2 h-1/2">
-            <MoneyChunk
-              color="cyan"
-              name="Gift"
-              amount={40}
-              showCents={false}
-            />
-          </div>
-          <div className="w-1/2 mb-2 h-1/2">
-            <MoneyChunk
-              color="navy"
-              name="Concert Ticket"
-              amount={110}
-              showCents={false}
-            />
-          </div>
-          <div className="w-1/2 mb-2 h-1/2">
-            <MoneyChunk
-              color="yellow"
-              name="New Laptop"
-              amount={10}
-              showCents={false}
-            />
-          </div> */}
         </div>
       </div>
     </PreviewCard>
