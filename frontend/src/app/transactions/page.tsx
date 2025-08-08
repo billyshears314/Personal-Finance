@@ -9,16 +9,29 @@ import TransactionsTable from "./components/TransactionsTable";
 import ContentContainer from "../../components/ContentContainer";
 import { useAppStore } from "@/stores/useAppStore";
 import { debounce } from "lodash";
+import { PaginationMetaData } from "@/types";
 
 const TransactionsPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
+  console.log("PAGE RERENDER: TRANSACTIONS PAGE");
+
+  const [paginationData, setPaginationData] = useState<PaginationMetaData>();
   const [search, setSearch] = useState(searchParams.get("search") || "");
   const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
   const [categoryFilter, setCategoryFilter] = useState(
     searchParams.get("category") || ""
   );
+
+  const { budgets, fetchBudgets } = useAppStore(
+    useShallow((state) => ({
+      budgets: state.budgets,
+      fetchBudgets: state.fetchBudgets,
+    }))
+  );
+
+  const budgetNames = budgets.map((budget) => budget.name);
 
   const { transactions, fetchTransactions, loading, error } = useAppStore(
     useShallow((state) => ({
@@ -45,18 +58,46 @@ const TransactionsPage = () => {
     [fetchTransactions, page, categoryFilter]
   );
 
-  // Trigger immediate fetch when page or categoryFilter changes
   useEffect(() => {
-    fetchTransactions({ page, search, categoryFilter });
-  }, [page, categoryFilter, fetchTransactions]);
+    async function loadTransactions() {
+      const result = (await fetchTransactions({
+        page,
+        search,
+        categoryFilter,
+      })) as PaginationMetaData;
+      setPaginationData(result);
+    }
+    loadTransactions();
+    fetchBudgets();
+  }, []);
+
+  // // Trigger immediate fetch when page or categoryFilter changes
+  // useEffect(() => {
+  //   fetchBudgets();
+  // }, [fetchBudgets]);
+
+  // // Trigger immediate fetch when page or categoryFilter changes
+  // useEffect(() => {
+  //   async function loadTransactions() {
+  //     const result = (await fetchTransactions({
+  //       page,
+  //       search,
+  //       categoryFilter,
+  //     })) as PaginationMetaData;
+  //     setPaginationData(result);
+  //   }
+  //   loadTransactions();
+  // }, [page, categoryFilter, fetchTransactions]);
 
   // Trigger debounced fetch when search changes
   useEffect(() => {
+    console.log("USE EFFECT C");
     debouncedFetchBySearch(search);
     return debouncedFetchBySearch.cancel;
   }, [search, debouncedFetchBySearch]);
 
   useEffect(() => {
+    console.log("USE EFFECT D");
     updateUrlParams({ search, page, category: categoryFilter });
   }, [search, page, categoryFilter]);
 
@@ -104,6 +145,7 @@ const TransactionsPage = () => {
             setCategoryFilter(category)
           }
           search={search}
+          budgetNames={budgetNames}
         />
         {loading && transactions.length === 0 ? (
           <div>Loading</div>
@@ -113,8 +155,8 @@ const TransactionsPage = () => {
 
         <div className="flex items-center w-full justify-center mt-4">
           <Pagination
-            count={20}
-            page={page}
+            count={paginationData?.lastPage || 1}
+            page={paginationData?.page || 1}
             variant="outlined"
             shape="rounded"
             onChange={(e: any, page: number) => setPage(page)}

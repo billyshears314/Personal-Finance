@@ -1,18 +1,19 @@
 import axios from "axios";
 import { create } from "zustand";
-import { Pot, Budget, Transaction, RecurringBill, Theme } from "@/types";
+import {
+  Pot,
+  Budget,
+  Transaction,
+  RecurringBill,
+  Theme,
+  PaginationMetaData,
+} from "@/types";
 
 // const APIHost = process.env.API_URL;
 const APIHost = "http://localhost:3001";
 
 // TODO: Fix, this is odd
 type PaginationMetaDataType = PaginationMetaData | null;
-
-interface PaginationMetaData {
-  total: number;
-  page: number;
-  lastPage: number;
-}
 
 interface FetchTransactionsResult {
   data: Transaction[];

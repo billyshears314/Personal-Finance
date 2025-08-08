@@ -6,6 +6,7 @@ interface TransactionSearchBarProps {
   search?: string;
   onSearchChange: (value: string) => void;
   onCategoryFilterChange: (value: string) => void;
+  budgetNames: string[];
 }
 
 const sortBy = {
@@ -45,30 +46,6 @@ const category = {
       label: "All transactions",
       value: "",
     },
-    {
-      label: "Entertainment",
-      value: "entertainment",
-    },
-    {
-      label: "Bills",
-      value: "bills",
-    },
-    {
-      label: "Groceries",
-      value: "groceries",
-    },
-    {
-      label: "Dining Out",
-      value: "Dining Out",
-    },
-    {
-      label: "Transportation",
-      value: "transportation",
-    },
-    {
-      label: "Personal Care",
-      value: "Personal Care",
-    },
   ],
 };
 
@@ -76,7 +53,25 @@ const TransactionSearchBar: React.FC<TransactionSearchBarProps> = ({
   onSearchChange,
   onCategoryFilterChange,
   search,
+  budgetNames,
 }) => {
+  const category = {
+    label: "Category",
+    options: [
+      {
+        label: "All transactions",
+        value: "",
+      },
+    ],
+  };
+
+  budgetNames.forEach((budgetName: string) => {
+    category.options.push({
+      label: budgetName,
+      value: budgetName,
+    });
+  });
+
   return (
     <div className="flex w-full mb-4">
       <SearchBar

@@ -55,7 +55,7 @@ const Table: React.FC<TableProps> = ({ transactions }) => {
         <tbody className="divide-y">
           {transactions.length > 0 &&
             transactions.map((transaction) => {
-              return <Row transaction={transaction} />;
+              return <Row transaction={transaction} key={transaction.id} />;
             })}
         </tbody>
       </table>

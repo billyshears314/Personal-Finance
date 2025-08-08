@@ -50,3 +50,9 @@ export interface Theme {
 export interface SvgIconProps {
   fill?: string;
 }
+
+export interface PaginationMetaData {
+  total: number;
+  page: number;
+  lastPage: number;
+}

@@ -49,7 +49,7 @@ const RecurringBillsTable = ({ recurringBills }: RecurringBillsTableProps) => {
         </thead>
         <tbody className="divide-y">
           {recurringBills.map((recurringBill) => {
-            return <Row recurringBill={recurringBill} />;
+            return <Row recurringBill={recurringBill} key={recurringBill.id} />;
           })}
         </tbody>
       </table>
