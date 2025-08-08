@@ -1,8 +1,8 @@
 import axios from "axios";
-import { init } from "next/dist/compiled/webpack/webpack";
 import { create } from "zustand";
 import { Pot, Budget, Transaction, RecurringBill, Theme } from "@/types";
 
+// const APIHost = process.env.API_URL;
 const APIHost = "http://localhost:3001";
 
 // TODO: Fix, this is odd

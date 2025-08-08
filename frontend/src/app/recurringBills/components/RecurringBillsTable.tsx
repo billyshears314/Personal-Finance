@@ -6,24 +6,31 @@ interface RecurringBillsTableProps {
   recurringBills: RecurringBill[];
 }
 
-const RecurringBillsTable = ({ recurringBills }: RecurringBillsTableProps) => {
-  const row = (bill: RecurringBill, status: paidStatus) => {
-    return (
-      <tr className="h-16" key={bill.id}>
-        <td>
-          <div className="flex items-center">
-            <img src={bill.party?.iconUrl} className="w-8 rounded-full" />
-            <div className="font-bold ml-3">{bill.party?.name}</div>
-          </div>
-        </td>
-        <td className="text-sm text-left">
-          {bill.dueDate} {status}
-        </td>
-        <td className="font-bold text-right">${bill.amount.toFixed(2)}</td>
-      </tr>
-    );
-  };
+interface RowProps {
+  recurringBill: RecurringBill;
+}
 
+const Row: React.FC<RowProps> = ({ recurringBill }) => {
+  return (
+    <tr className="h-16" key={recurringBill.id}>
+      <td>
+        <div className="flex items-center">
+          <img src={recurringBill.party.iconUrl} className="w-8 rounded-full" />
+          <div className="font-bold ml-3">{recurringBill.party.name}</div>
+        </div>
+      </td>
+      <td className="text-sm text-left">
+        {/* TODO: ADD STATUS */}
+        {recurringBill.dueDate}
+      </td>
+      <td className="font-bold text-right">
+        ${recurringBill.amount.toFixed(2)}
+      </td>
+    </tr>
+  );
+};
+
+const RecurringBillsTable = ({ recurringBills }: RecurringBillsTableProps) => {
   return (
     <div className="bg-white rounded-xl p-8">
       <table className="w-full">
@@ -42,7 +49,7 @@ const RecurringBillsTable = ({ recurringBills }: RecurringBillsTableProps) => {
         </thead>
         <tbody className="divide-y">
           {recurringBills.map((recurringBill) => {
-            return <>{row(recurringBill, "paid")}</>;
+            return <Row recurringBill={recurringBill} />;
           })}
         </tbody>
       </table>

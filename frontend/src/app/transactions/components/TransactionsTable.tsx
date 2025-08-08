@@ -7,32 +7,26 @@ interface TableProps {
 }
 
 interface RowProps {
-  entityName: string;
-  entityIcon: string;
-  category: string;
-  transactionDate: string;
-  amount: number;
+  transaction: Transaction;
 }
 
-const Row: React.FC<RowProps> = ({
-  entityName,
-  entityIcon,
-  category,
-  transactionDate,
-  amount,
-}) => {
+const Row: React.FC<RowProps> = ({ transaction }) => {
   return (
     <tr className="border-b h-16">
       <td className="p-4 font-bold">
         <div className="flex items-center">
-          <img src={entityIcon} width={36} className="rounded-full mr-4" />
-          <span>{entityName}</span>
+          <img
+            src={transaction.party.iconUrl}
+            width={36}
+            className="rounded-full mr-4"
+          />
+          <span>{transaction.party.name}</span>
         </div>
       </td>
-      <td className="text-gray-500 text-xs">{category}</td>
-      <td className="text-gray-500 text-xs">{transactionDate}</td>
+      <td className="text-gray-500 text-xs">{transaction.budget.name}</td>
+      <td className="text-gray-500 text-xs">{transaction.date}</td>
       <td className="text-right font-semibold">
-        <TransactionAmount amount={amount} />
+        <TransactionAmount amount={transaction.amount} />
       </td>
     </tr>
   );
@@ -61,16 +55,7 @@ const Table: React.FC<TableProps> = ({ transactions }) => {
         <tbody className="divide-y">
           {transactions.length > 0 &&
             transactions.map((transaction) => {
-              return (
-                <Row
-                  entityName={transaction.party.name}
-                  entityIcon={transaction.party.iconUrl}
-                  category={transaction.budget.name}
-                  transactionDate={transaction.date}
-                  amount={transaction.amount}
-                  key={transaction.id}
-                />
-              );
+              return <Row transaction={transaction} />;
             })}
         </tbody>
       </table>

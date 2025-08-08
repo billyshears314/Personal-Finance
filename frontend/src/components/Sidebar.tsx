@@ -4,20 +4,27 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  OverviewIcon,
+  BudgetsIcon,
+  PotsIcon,
+  RecurringBillsIcon,
+  TransactionsIcon,
+} from "@/icons";
 
 interface SidebarProps {}
 
 interface SidebarLinkProps {
   link: string;
   text: string;
-  iconSrc: string;
+  Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   active?: boolean;
 }
 
 const SidebarLink: React.FC<SidebarLinkProps> = ({
   link,
   text,
-  iconSrc,
+  Icon,
   active = false,
 }) => {
   return (
@@ -30,12 +37,8 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
       }`}
     >
       <div className="flex items-center space-x-4 ml-4">
-        <img
-          src={`images/${iconSrc}`}
-          width="24"
-          height="auto"
-          className={`${active ? "fill-green-500" : ""}`}
-        />{" "}
+        {/* TODO: Use class names instead */}
+        <Icon fill={active ? "#277C78" : "#B3B3B3"} />
         <span>{text}</span>
       </div>
     </Link>
@@ -43,18 +46,18 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
 };
 
 const navItems = [
-  { href: "/", label: "Overview", iconSrc: "icon-nav-overview.svg" },
+  { href: "/", label: "Overview", icon: OverviewIcon },
   {
     href: "/transactions",
     label: "Transactions",
-    iconSrc: "icon-nav-transactions.svg",
+    icon: TransactionsIcon,
   },
-  { href: "/budgets", label: "Budgets", iconSrc: "icon-nav-budgets.svg" },
-  { href: "/pots", label: "Pots", iconSrc: "icon-nav-pots.svg" },
+  { href: "/budgets", label: "Budgets", icon: BudgetsIcon },
+  { href: "/pots", label: "Pots", icon: PotsIcon },
   {
     href: "/recurringBills",
     label: "Recurring Bills",
-    iconSrc: "icon-nav-recurring-bills.svg",
+    icon: RecurringBillsIcon,
   },
 ];
 
@@ -75,7 +78,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
               key={item.label}
               link={item.href}
               text={item.label}
-              iconSrc={item.iconSrc}
+              Icon={item.icon}
               active={item.href === pathname}
             />
           );

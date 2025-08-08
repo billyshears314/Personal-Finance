@@ -46,3 +46,7 @@ export interface Theme {
   name?: string;
   color?: string;
 }
+
+export interface SvgIconProps {
+  fill?: string;
+}
