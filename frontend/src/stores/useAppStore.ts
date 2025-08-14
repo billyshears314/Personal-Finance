@@ -9,8 +9,7 @@ import {
   PaginationMetaData,
 } from "@/types";
 
-// const APIHost = process.env.API_URL;
-const APIHost = "http://localhost:3001";
+const APIHost = process.env.NEXT_PUBLIC_API_URL;
 
 // TODO: Fix, this is odd
 type PaginationMetaDataType = PaginationMetaData | null;
