@@ -1,5 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import { useState } from "react";
 import Modal from "../Modal";
 import InputField from "./InputField";
 import Dropdown from "./DropdownWithColor";

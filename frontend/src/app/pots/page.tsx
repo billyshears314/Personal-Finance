@@ -14,7 +14,7 @@ const PotsPage = () => {
     setIsModalOpen(true);
   };
 
-  const { pots, fetchPots, loading, error } = useAppStore(
+  const { pots, fetchPots, loading } = useAppStore(
     useShallow((state) => ({
       pots: state.pots,
       fetchPots: state.fetchPots,

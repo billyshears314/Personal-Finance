@@ -7,7 +7,9 @@ interface LatestSpendingRowProps {
   date: string;
 }
 
-interface LatestSpendingWidgetProps {}
+interface LatestSpendingWidgetProps {
+  empty?: string; // just to satisfy error
+}
 
 const LatestSpendingWidget: React.FC<LatestSpendingWidgetProps> = ({}) => {
   const LatestSpendingRow: React.FC<LatestSpendingRowProps> = ({

@@ -39,15 +39,15 @@ const sortBy = {
   ],
 };
 
-const category = {
-  label: "Category",
-  options: [
-    {
-      label: "All transactions",
-      value: "",
-    },
-  ],
-};
+// const category = {
+//   label: "Category",
+//   options: [
+//     {
+//       label: "All transactions",
+//       value: "",
+//     },
+//   ],
+// };
 
 const TransactionSearchBar: React.FC<TransactionSearchBarProps> = ({
   onSearchChange,

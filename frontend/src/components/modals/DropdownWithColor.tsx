@@ -20,7 +20,7 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
   options,
   label,
   id,
-  value,
+  // value,
   onChange,
 }) => {
   const generatedId = useId();

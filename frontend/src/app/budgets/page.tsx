@@ -16,7 +16,7 @@ const BudgetPage = () => {
     setIsModalOpen(true);
   };
 
-  const { budgets, fetchBudgets, loading, error } = useAppStore(
+  const { budgets, fetchBudgets, loading } = useAppStore(
     useShallow((state) => ({
       budgets: state.budgets,
       fetchBudgets: state.fetchBudgets,

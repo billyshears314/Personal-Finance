@@ -9,7 +9,7 @@ import ContentContainer from "../../components/ContentContainer";
 import { useAppStore } from "@/stores/useAppStore";
 
 const RecurringBillsPage = () => {
-  const { recurringBills, fetchRecurringBills, loading, error } = useAppStore(
+  const { recurringBills, fetchRecurringBills } = useAppStore(
     useShallow((state) => ({
       recurringBills: state.recurringBills,
       fetchRecurringBills: state.fetchRecurringBills,

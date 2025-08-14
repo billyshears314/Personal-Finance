@@ -1,5 +1,4 @@
 import React from "react";
-import { Card } from "@mui/material";
 import { Donut } from "../../../components";
 
 interface SpendingSummaryItemProps {

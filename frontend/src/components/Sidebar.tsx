@@ -12,7 +12,9 @@ import {
   TransactionsIcon,
 } from "@/icons";
 
-interface SidebarProps {}
+interface SidebarProps {
+  empty?: string; // just to satisfy error
+}
 
 interface SidebarLinkProps {
   link: string;

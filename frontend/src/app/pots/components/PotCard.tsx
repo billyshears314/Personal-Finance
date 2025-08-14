@@ -42,10 +42,12 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
   };
 
   const handleAddOpen = (potName: string) => {
+    console.log("POT NAME: " + potName);
     setModalType("add");
   };
 
   const handleWithdrawOpen = (potName: string) => {
+    console.log("POT NAME: " + potName);
     setModalType("withdraw");
   };
 

@@ -33,7 +33,7 @@ const TransactionsPage = () => {
 
   const budgetNames = budgets.map((budget) => budget.name);
 
-  const { transactions, fetchTransactions, loading, error } = useAppStore(
+  const { transactions, fetchTransactions, loading } = useAppStore(
     useShallow((state) => ({
       transactions: state.transactions,
       fetchTransactions: state.fetchTransactions,
@@ -43,12 +43,12 @@ const TransactionsPage = () => {
   );
 
   // Debounce the fetchTransactions call itself
-  const debouncedFetch = useCallback(
-    debounce((page: number, search: string, categoryFilter: string) => {
-      fetchTransactions({ page, search, categoryFilter: categoryFilter });
-    }, 300),
-    [fetchTransactions]
-  );
+  // const debouncedFetch = useCallback(
+  //   debounce((page: number, search: string, categoryFilter: string) => {
+  //     fetchTransactions({ page, search, categoryFilter: categoryFilter });
+  //   }, 300),
+  //   [fetchTransactions]
+  // );
 
   // Debounced fetch for search only
   const debouncedFetchBySearch = useCallback(
@@ -159,7 +159,7 @@ const TransactionsPage = () => {
             page={paginationData?.page || 1}
             variant="outlined"
             shape="rounded"
-            onChange={(e: any, page: number) => setPage(page)}
+            onChange={(e: React.ChangeEvent, page: number) => setPage(page)}
           />
         </div>
       </div>

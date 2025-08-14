@@ -5,12 +5,11 @@ interface DonutProps {
 
 const OUTER_RING_RADIUS = 16;
 const OUTER_RING_WIDTH = 8;
-const INNER_RING_WIDTH = 4;
-const INNER_RING_RADIUS =
-  OUTER_RING_RADIUS - OUTER_RING_WIDTH / 2 - INNER_RING_WIDTH / 2;
+// const INNER_RING_WIDTH = 4;
+// const INNER_RING_RADIUS = OUTER_RING_RADIUS - OUTER_RING_WIDTH / 2 - INNER_RING_WIDTH / 2;
 
 const OUTER_RING_CIRCUMFERENCE = 2 * Math.PI * OUTER_RING_RADIUS;
-const INNER_RING_CIRCUMFERENCE = 2 * Math.PI * INNER_RING_RADIUS;
+// const INNER_RING_CIRCUMFERENCE = 2 * Math.PI * INNER_RING_RADIUS;
 
 const categoryData = [
   {
@@ -76,6 +75,8 @@ const calculateOffset = (circumference: number, percent: number): number => {
 };
 
 const Donut: React.FC<DonutProps> = ({ amount, limit }) => {
+  console.log("AMOUNT: " + amount);
+  console.log("LIMIT: " + limit);
   return (
     <div>
       <svg width="250" height="250" viewBox="0 0 48 48">

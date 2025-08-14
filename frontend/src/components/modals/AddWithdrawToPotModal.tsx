@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import Modal from "../Modal";
 import InputField from "./InputField";
-import Dropdown from "./DropdownWithColor";
+// import Dropdown from "./DropdownWithColor";
 import Button from "./Button";
 import { useAppStore } from "@/stores/useAppStore";
 import { Pot } from "@/types";

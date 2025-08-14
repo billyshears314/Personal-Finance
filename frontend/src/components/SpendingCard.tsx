@@ -1,6 +1,6 @@
 import TitleWithDot from "./TitleWithDot";
-import Bar from "./Bar";
-import MoneyChunk from "./MoneyChunk";
+// import Bar from "./Bar";
+// import MoneyChunk from "./MoneyChunk";
 import LatestSpendingWidget from "./LatestSpendingWidget";
 import MoneyRemainingBar from "./MoneyRemainingBar";
 

@@ -1,6 +1,6 @@
 import { RecurringBill } from "@/types";
 
-type paidStatus = "paid" | "due" | "overdue";
+// type paidStatus = "paid" | "due" | "overdue";
 
 interface RecurringBillsTableProps {
   recurringBills: RecurringBill[];

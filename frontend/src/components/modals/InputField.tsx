@@ -1,12 +1,12 @@
 import { useId, useState } from "react";
-import { Place } from "@mui/icons-material";
+// import { Place } from "@mui/icons-material";
 
 type InputFieldType = "text" | "number";
 
 interface InputFieldProps {
   label: string;
   placeholderText: string;
-  onChange: (value: any) => void;
+  onChange: (value: string) => void;
   id?: string;
   initialValue?: string;
   type?: InputFieldType;
@@ -27,8 +27,7 @@ const InputField: React.FC<InputFieldProps> = ({
 
   const [value, setValue] = useState(initialValue);
 
-  const handleOnChange = (e: any) => {
-    const val = e.target.value;
+  const handleOnChange = (val: string) => {
     if (maxCharacters && val.length > maxCharacters) return;
     setValue(val);
     onChange(val);
@@ -47,7 +46,7 @@ const InputField: React.FC<InputFieldProps> = ({
         type={type}
         value={value}
         placeholder={placeholderText}
-        onChange={handleOnChange}
+        onChange={(e) => handleOnChange(e.target.value)}
         className="border p-2 rounded border-black text-xs"
       ></input>
       {maxCharacters && (

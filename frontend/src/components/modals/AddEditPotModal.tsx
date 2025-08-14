@@ -1,6 +1,5 @@
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
-import ReactDOM from "react-dom";
 import Modal from "../Modal";
 import InputField from "./InputField";
 import DropdownWithColor from "./DropdownWithColor";
@@ -37,7 +36,7 @@ export default function AddEditPotModal({
 
   const createPot = useAppStore((state) => state.createPot);
 
-  const { themes, fetchThemes, loading, error } = useAppStore(
+  const { themes, fetchThemes } = useAppStore(
     useShallow((state) => ({
       themes: state.themes,
       fetchThemes: state.fetchThemes,
