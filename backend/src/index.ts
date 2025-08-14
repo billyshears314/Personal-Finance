@@ -14,7 +14,14 @@ import recurringBillsRouter from "./routes/recurringBills";
 import cors from "cors";
 
 const app = express();
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://personal-finance-f5x3.vercel.app/",
+    ],
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
