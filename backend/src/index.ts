@@ -18,7 +18,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://personal-finance-f5x3.vercel.app/",
+      "https://personal-finance-f5x3.vercel.app",
     ],
   })
 );
