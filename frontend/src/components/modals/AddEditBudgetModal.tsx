@@ -83,7 +83,7 @@ export default function AddEditBudgetModal({
         label="Maximum Spend"
         type="number"
         placeholderText="e.g. 2000"
-        onChange={(value) => setMaximumSpend(value)}
+        onChange={(value) => setMaximumSpend(parseInt(value))}
       />
       <Dropdown
         label="Theme"
