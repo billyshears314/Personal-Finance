@@ -7,7 +7,7 @@ import { Budget } from "./entity/Budget";
 import { Transaction } from "./entity/Transaction";
 import { RecurringBill } from "./entity/RecurringBill";
 
-const AppDataSource = new DataSource({
+export const AppDataSource = new DataSource({
   type: "postgres",
   host: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT || "5432", 10),
@@ -24,5 +24,3 @@ const AppDataSource = new DataSource({
   entities: [Pot, Theme, Party, Budget, Transaction, RecurringBill],
   migrations: ["src/migration/*.ts"],
 });
-
-export default AppDataSource;
