@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useShallow } from "zustand/shallow";
 import Pagination from "@mui/material/Pagination";
@@ -137,33 +137,35 @@ const TransactionsPage = () => {
   };
 
   return (
-    <ContentContainer title="Transactions">
-      <div className="bg-white p-6">
-        <TransactionSearchBar
-          onSearchChange={(search: string) => setSearch(search)}
-          onCategoryFilterChange={(category: string) =>
-            setCategoryFilter(category)
-          }
-          search={search}
-          budgetNames={budgetNames}
-        />
-        {loading && transactions.length === 0 ? (
-          <div>Loading</div>
-        ) : (
-          <TransactionsTable transactions={transactions} />
-        )}
-
-        <div className="flex items-center w-full justify-center mt-4">
-          <Pagination
-            count={paginationData?.lastPage || 1}
-            page={paginationData?.page || 1}
-            variant="outlined"
-            shape="rounded"
-            onChange={(e: React.ChangeEvent, page: number) => setPage(page)}
+    <Suspense fallback={<div>Loading...</div>}>
+      <ContentContainer title="Transactions">
+        <div className="bg-white p-6">
+          <TransactionSearchBar
+            onSearchChange={(search: string) => setSearch(search)}
+            onCategoryFilterChange={(category: string) =>
+              setCategoryFilter(category)
+            }
+            search={search}
+            budgetNames={budgetNames}
           />
+          {loading && transactions.length === 0 ? (
+            <div>Loading</div>
+          ) : (
+            <TransactionsTable transactions={transactions} />
+          )}
+
+          <div className="flex items-center w-full justify-center mt-4">
+            <Pagination
+              count={paginationData?.lastPage || 1}
+              page={paginationData?.page || 1}
+              variant="outlined"
+              shape="rounded"
+              onChange={(e: React.ChangeEvent, page: number) => setPage(page)}
+            />
+          </div>
         </div>
-      </div>
-    </ContentContainer>
+      </ContentContainer>
+    </Suspense>
   );
 };
 
