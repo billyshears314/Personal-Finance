@@ -53,22 +53,22 @@ const Home = () => {
 
   return (
     <ContentContainer title="Overview">
-      <div className="flex gap-4 mb-8">
-        <div className="w-1/3">
+      <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <div className="w-full md:w-1/3">
           <MoneyCard title="Current Balance" amount={balance} type="active" />
         </div>
-        <div className="w-1/3">
+        <div className="w-full md:w-1/3">
           <MoneyCard title="Income" amount={income} />
         </div>
-        <div className="w-1/3">
+        <div className="w-full md:w-1/3">
           <MoneyCard title="Expenses" amount={expenses} />
         </div>
       </div>
-      <div className="columns-2">
+      <div className="lg:columns-2">
         <div className="mb-4">
           <PotsCard pots={topPots} totalSaved={totalSavedForPots} />
         </div>
-        <div className="mb-4 pb-20">
+        <div className="mb-4 lg:pb-20">
           <TransactionsCard transactions={topTransactions} />
         </div>
         <div className="mb-4">

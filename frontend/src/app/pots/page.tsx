@@ -40,7 +40,7 @@ const PotsPage = () => {
           <div className="flex flex-wrap justify-start gap-4">
             {pots.map((pot) => {
               return (
-                <div className="w-[calc(50%-8px)] pb-4" key={pot.id}>
+                <div className="w-full lg:w-[calc(50%-8px)] pb-4" key={pot.id}>
                   <PotCard pot={pot} />
                 </div>
               );

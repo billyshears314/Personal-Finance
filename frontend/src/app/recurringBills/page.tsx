@@ -24,16 +24,16 @@ const RecurringBillsPage = () => {
 
   return (
     <ContentContainer title="Recurring Bills">
-      <div className="flex gap-8">
-        <div className="w-1/3">
-          <div className="mb-4">
+      <div className="flex flex-col lg:flex-row gap-8">
+        <div className="w-full lg:w-1/3 md-only:flex md-only:flex-row md-only:items-stretch md-only:gap-4">
+          <div className="mb-4 md:mb-0 md-only:w-1/2 md-only:flex-1 md-only:flex-col">
             <TotalBillsCard />
           </div>
-          <div>
+          <div className="md-only:w-1/2 md-only:flex-1 md-only:flex-col">
             <SummaryCard />
           </div>
         </div>
-        <div className="w-2/3">
+        <div className="w-full lg:w-2/3">
           <RecurringBillsTable recurringBills={recurringBills} />
         </div>
       </div>

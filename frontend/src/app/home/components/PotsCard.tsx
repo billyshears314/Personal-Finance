@@ -12,8 +12,8 @@ interface PotsCardProps {
 const PotsCard = ({ pots, totalSaved }: PotsCardProps) => {
   return (
     <PreviewCard title="Pots" detailsLink="/pots">
-      <div className="flex gap-4">
-        <div className="flex w-2/5 p-4 bg-beige-100 rounded-xl">
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex w-full md:w-2/5 p-4 bg-beige-100 rounded-xl items-center">
           <div className="h-full flex justify-center mr-8">
             <img src="images/icon-pot.svg" className="w-10" />
           </div>
@@ -24,7 +24,7 @@ const PotsCard = ({ pots, totalSaved }: PotsCardProps) => {
             </div>
           </div>
         </div>
-        <div className="w-3/5 flex flex-wrap">
+        <div className="w-full md:w-3/5 flex flex-wrap">
           {pots.length > 0 &&
             pots.map((pot: Pot) => {
               return (

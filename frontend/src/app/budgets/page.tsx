@@ -39,11 +39,11 @@ const BudgetPage = () => {
           buttonText="+ Add New Budget"
           onButtonClick={handleAddNewBudget}
         >
-          <div className="flex">
-            <div className="pr-4 w-2/5">
+          <div className="flex flex-col">
+            <div className="w-full mb-8 lg:pr-4 lg:w-2/5">
               <SpendingSummaryWidget />
             </div>
-            <div className="pl-4 w-3/5">
+            <div className="w-full lg:pl-4 lg:w-3/5">
               {budgets.map((budget) => {
                 return (
                   <div className="mb-8" key={budget.id}>

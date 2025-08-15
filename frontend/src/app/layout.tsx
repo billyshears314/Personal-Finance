@@ -28,9 +28,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex">
+        <div className="flex pb-[50px] lg:pb-0">
           <Sidebar />
-          <div className="w-full p-8 ml-64">{children}</div>
+          <div className="w-full p-4 lg:p-8 lg:ml-64">{children}</div>
         </div>
         <div id="modal-root"></div>
       </body>

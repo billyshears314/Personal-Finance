@@ -16,6 +16,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        "md-only": { min: "768px", max: "1023px" },
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

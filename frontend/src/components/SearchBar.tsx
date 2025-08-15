@@ -18,7 +18,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           type="text"
           name="search"
           placeholder={placeholderText}
-          className="w-[300px] px-2 outline-none bg-transparent"
+          className="w-max-[300px] px-2 outline-none bg-transparent"
           value={value}
           onChange={(e) => onChange(e.target.value)}
         />

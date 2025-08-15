@@ -74,18 +74,23 @@ const TransactionSearchBar: React.FC<TransactionSearchBarProps> = ({
 
   return (
     <div className="flex w-full mb-4">
-      <SearchBar
-        placeholderText="Search Transaction"
-        onChange={onSearchChange}
-        value={search}
-      />
-      <div className="flex items-center gap-4">
-        <Dropdown {...sortBy} />
-        <Dropdown
-          {...category}
-          onChange={(e) => onCategoryFilterChange(e.target.value)}
+      <div className="w-2/3 md:w-1/3">
+        <SearchBar
+          placeholderText="Search Transaction"
+          onChange={onSearchChange}
+          value={search}
         />
       </div>
+      <div className="flex items-center lg:justify-end w-1/3 md:w-2/3">
+        <div className="hidden md:block md:flex md:gap-4">
+          <Dropdown {...sortBy} />
+          <Dropdown
+            {...category}
+            onChange={(e) => onCategoryFilterChange(e.target.value)}
+          />
+        </div>
+      </div>
+      <div className="md:hidden">Filters</div>
     </div>
   );
 };
