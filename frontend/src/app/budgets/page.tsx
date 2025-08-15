@@ -39,7 +39,7 @@ const BudgetPage = () => {
           buttonText="+ Add New Budget"
           onButtonClick={handleAddNewBudget}
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col lg:flex-row">
             <div className="w-full mb-8 lg:pr-4 lg:w-2/5">
               <SpendingSummaryWidget />
             </div>

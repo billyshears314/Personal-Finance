@@ -78,24 +78,23 @@ const Donut: React.FC<DonutProps> = ({ amount, limit }) => {
   console.log("AMOUNT: " + amount);
   console.log("LIMIT: " + limit);
   return (
-    <div>
-      <svg width="250" height="250" viewBox="0 0 48 48">
-        <circle r="16" cx="16" cy="16" fill="white"></circle>
-        <circle
-          r={OUTER_RING_RADIUS}
-          cx="24"
-          cy="24"
-          fill="transparent"
-          //   stroke="#4CAF50"
-          strokeWidth={OUTER_RING_WIDTH}
-          strokeDasharray={calculateDashArray(
-            OUTER_RING_CIRCUMFERENCE,
-            (categoryData[0].amount / getTotal()) * 100
-          )}
-          strokeDashoffset={getCategoryOffset(OUTER_RING_CIRCUMFERENCE, 0)}
-          className="stroke-category-green"
-        ></circle>
-        {/* <circle
+    <svg width="250" height="250" viewBox="0 0 48 48">
+      <circle r="16" cx="16" cy="16" fill="white"></circle>
+      <circle
+        r={OUTER_RING_RADIUS}
+        cx="24"
+        cy="24"
+        fill="transparent"
+        //   stroke="#4CAF50"
+        strokeWidth={OUTER_RING_WIDTH}
+        strokeDasharray={calculateDashArray(
+          OUTER_RING_CIRCUMFERENCE,
+          (categoryData[0].amount / getTotal()) * 100
+        )}
+        strokeDashoffset={getCategoryOffset(OUTER_RING_CIRCUMFERENCE, 0)}
+        className="stroke-category-green"
+      ></circle>
+      {/* <circle
           r={INNER_RING_RADIUS}
           cx="24"
           cy="24"
@@ -104,57 +103,46 @@ const Donut: React.FC<DonutProps> = ({ amount, limit }) => {
           strokeDasharray={calculateDashArray(INNER_RING_CIRCUMFERENCE, 40)}
           className="stroke-category-1/25"
         ></circle> */}
-        <circle
-          r={OUTER_RING_RADIUS}
-          cx="24"
-          cy="24"
-          fill="transparent"
-          strokeWidth={OUTER_RING_WIDTH}
-          strokeDasharray={calculateDashArray(
-            OUTER_RING_CIRCUMFERENCE,
-            (categoryData[1].amount / getTotal()) * 100
-          )}
-          strokeDashoffset={getCategoryOffset(OUTER_RING_CIRCUMFERENCE, 1)}
-          className="stroke-category-cyan"
-        ></circle>
-        <circle
-          r={OUTER_RING_RADIUS}
-          cx="24"
-          cy="24"
-          fill="transparent"
-          strokeWidth={OUTER_RING_WIDTH}
-          strokeDasharray={calculateDashArray(
-            OUTER_RING_CIRCUMFERENCE,
-            (categoryData[2].amount / getTotal()) * 100
-          )}
-          strokeDashoffset={getCategoryOffset(OUTER_RING_CIRCUMFERENCE, 2)}
-          className="stroke-category-yellow"
-        ></circle>
-        <circle
-          r={OUTER_RING_RADIUS}
-          cx="24"
-          cy="24"
-          fill="transparent"
-          strokeWidth={OUTER_RING_WIDTH}
-          strokeDasharray={calculateDashArray(
-            OUTER_RING_CIRCUMFERENCE,
-            (categoryData[3].amount / getTotal()) * 100
-          )}
-          strokeDashoffset={getCategoryOffset(OUTER_RING_CIRCUMFERENCE, 3)}
-          className="stroke-category-navy"
-        ></circle>
-      </svg>
-    </div>
-    // <div className="w-64 h-64 bg-blue-500 rounded-full relative">
-    //   <div className="w-56 h-56 bg-orange-200 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-    //   <div className="w-32 h-32 bg-white rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-    //   <div className="flex justify-center w-full h-full bg-blue-400 items-center z-1000">
-    //     <div className="w-30 h-30">
-    //       <div className="text-base font-bold">${amount}</div>
-    //       <div className="text-sm text-gray-500">of ${limit} limit</div>
-    //     </div>
-    //   </div>
-    // </div>
+      <circle
+        r={OUTER_RING_RADIUS}
+        cx="24"
+        cy="24"
+        fill="transparent"
+        strokeWidth={OUTER_RING_WIDTH}
+        strokeDasharray={calculateDashArray(
+          OUTER_RING_CIRCUMFERENCE,
+          (categoryData[1].amount / getTotal()) * 100
+        )}
+        strokeDashoffset={getCategoryOffset(OUTER_RING_CIRCUMFERENCE, 1)}
+        className="stroke-category-cyan"
+      ></circle>
+      <circle
+        r={OUTER_RING_RADIUS}
+        cx="24"
+        cy="24"
+        fill="transparent"
+        strokeWidth={OUTER_RING_WIDTH}
+        strokeDasharray={calculateDashArray(
+          OUTER_RING_CIRCUMFERENCE,
+          (categoryData[2].amount / getTotal()) * 100
+        )}
+        strokeDashoffset={getCategoryOffset(OUTER_RING_CIRCUMFERENCE, 2)}
+        className="stroke-category-yellow"
+      ></circle>
+      <circle
+        r={OUTER_RING_RADIUS}
+        cx="24"
+        cy="24"
+        fill="transparent"
+        strokeWidth={OUTER_RING_WIDTH}
+        strokeDasharray={calculateDashArray(
+          OUTER_RING_CIRCUMFERENCE,
+          (categoryData[3].amount / getTotal()) * 100
+        )}
+        strokeDashoffset={getCategoryOffset(OUTER_RING_CIRCUMFERENCE, 3)}
+        className="stroke-category-navy"
+      ></circle>
+    </svg>
   );
 };
 

@@ -12,7 +12,7 @@ const DetailsLink: React.FC<DetailsLinkProps> = ({
 }) => {
   return (
     <Link href={{ pathname: link }} className="flex">
-      <div className="mr-3 text-sm text-gray-500">{text}</div>
+      <div className="mr-3 text-base text-gray-500">{text}</div>
       <img src="/images/icon-caret-right.svg" width="5" height="auto" />
     </Link>
   );

@@ -2,8 +2,10 @@ const SummaryCard = () => {
   const row = (title: string, amount: string) => {
     return (
       <tr className="h-14">
-        <td className="text-gray-500 text-sm">{title}</td>
-        <td className="text-right text-gray-900 font-bold text-sm">{amount}</td>
+        <td className="text-gray-500 text-base">{title}</td>
+        <td className="text-right text-gray-900 font-bold text-base">
+          {amount}
+        </td>
       </tr>
     );
   };

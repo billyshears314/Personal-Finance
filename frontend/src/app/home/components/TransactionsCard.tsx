@@ -1,6 +1,7 @@
 import PreviewCard from "./PreviewCard";
 import TransactionAmount from "../../../components/TransactionAmount";
 import { Transaction } from "@/types";
+import { formatDate } from "@/utils/date";
 
 interface TransactionsCardProps {
   transactions: Transaction[];
@@ -12,7 +13,7 @@ interface TransactionRowProps {
 
 const TransactionRow = ({ transaction }: TransactionRowProps) => {
   return (
-    <tr className="h-[67.5px]" key={transaction.id}>
+    <tr className="h-[80px]" key={transaction.id}>
       <td className="w-10">
         <img
           src={transaction.party.iconUrl}
@@ -22,10 +23,12 @@ const TransactionRow = ({ transaction }: TransactionRowProps) => {
       </td>
       <td className="font-bold pl-4">{transaction.party.name}</td>
       <td className="text-right">
-        <div>
+        <div className="mb-1">
           <TransactionAmount amount={transaction.amount} />
         </div>
-        <div className="text-sm text-gray-500">{transaction.date}</div>
+        <div className="text-sm text-gray-500">
+          {formatDate(transaction.date)}
+        </div>
       </td>
     </tr>
   );

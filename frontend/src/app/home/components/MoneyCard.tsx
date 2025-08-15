@@ -12,7 +12,7 @@ const MoneyCard: React.FC<MoneyCardProps> = ({
   type = "regular",
 }) => {
   const classNames = {
-    regular: "bg-white text-gray-900",
+    regular: "bg-white text-gray-500",
     active: "bg-gray-900 text-white",
   };
 
@@ -20,7 +20,11 @@ const MoneyCard: React.FC<MoneyCardProps> = ({
     <div className={`rounded-xl p-6 ${classNames[type]}`}>
       <div className="mb-4">{title}</div>
       {amount && (
-        <div className="text-3xl font-semibold">
+        <div
+          className={`text-3xl font-semibold ${
+            type !== "active" && "text-gray-900"
+          }`}
+        >
           $
           {amount.toLocaleString("en-US", {
             minimumFractionDigits: 2,

@@ -1,6 +1,7 @@
 import React from "react";
 import TransactionAmount from "../../../components/TransactionAmount";
 import { Transaction } from "@/types";
+import { formatDate } from "@/utils/date";
 
 interface TransactionsTableDesktopProps {
   transactions: Transaction[];
@@ -24,7 +25,9 @@ const Row: React.FC<RowProps> = ({ transaction }) => {
         </div>
       </td>
       <td className="text-gray-500 text-xs">{transaction.budget.name}</td>
-      <td className="text-gray-500 text-xs">{transaction.date}</td>
+      <td className="text-gray-500 text-xs font-thin">
+        {formatDate(transaction.date)}
+      </td>
       <td className="text-right font-semibold">
         <TransactionAmount amount={transaction.amount} />
       </td>

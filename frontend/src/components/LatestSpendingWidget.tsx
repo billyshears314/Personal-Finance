@@ -19,14 +19,14 @@ const LatestSpendingWidget: React.FC<LatestSpendingWidgetProps> = ({}) => {
     date,
   }) => {
     return (
-      <tr className="h-16">
-        <td className="hidden md:inline">
+      <tr className="h-20">
+        <td className="hidden md:table-cell align-middle w-[30px]">
           <div className="h-8 w-8">
             <img className="rounded-full" src={`images/avatars/${icon}`} />
           </div>
         </td>
         <td>
-          <div className="font-bold lg:ml-4">{name}</div>
+          <div className="font-bold md:ml-4">{name}</div>
         </td>
         <td>
           <div className="text-right ml-auto">
