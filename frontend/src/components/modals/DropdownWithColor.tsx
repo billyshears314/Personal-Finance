@@ -84,19 +84,23 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
           )}
         </div>
         <button
-          className="bg-white border px-4 py-2 rounded text-sm w-[150px]"
+          className="bg-white border px-4 py-2 rounded text-sm w-full"
           onClick={handleChooseColor}
         >
           {selectedOption ? (
-            <div className=" flex items-center cursor-pointer">
+            <div className="flex items-center cursor-pointer">
               <span
                 className="w-3 h-3 rounded-full mr-2"
                 style={{ backgroundColor: selectedOption.color }}
               ></span>
-              {selectedOption.label}
+              <span>{selectedOption.label}</span>
+              <img src="images/icon-caret-down.svg" className="ml-auto" />
             </div>
           ) : (
-            <div>Choose Color</div>
+            <div className="flex items-center">
+              <div>Choose Color</div>
+              <img src="images/icon-caret-down.svg" className="ml-auto" />
+            </div>
           )}
         </button>
         <div
