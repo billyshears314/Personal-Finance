@@ -6,13 +6,14 @@ interface Option {
   value: string | number;
   label: string;
   color?: string;
+  alreadyUsed?: boolean;
 }
 
 interface DropdownWithColorProps {
   options: Option[];
   label?: string;
   id?: string;
-  value?: string;
+  value?: string | number;
   onChange: (value: string | number) => void;
 }
 
@@ -20,16 +21,22 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
   options,
   label,
   id,
-  // value,
+  value,
   onChange,
 }) => {
+  console.log("OPTIONS: " + JSON.stringify(options, null, 2));
+  console.log("VALUE: " + value);
+
   const generatedId = useId();
   const selectId = id || generatedId;
 
   const [showOptions, setShowOptions] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<Option>();
+  const [selectedOption, setSelectedOption] = useState<Option>(
+    options.find((opt) => opt.value === value) || null
+  );
 
   const handleClickOption = (option: Option) => {
+    if (option.alreadyUsed) return;
     setSelectedOption(option);
     onChange(option.value);
     setShowOptions(false);
@@ -104,7 +111,7 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
           )}
         </button>
         <div
-          className={`absolute mt-2 w-40 bg-white border rounded shadow max-h-40 overflow-y-auto ${
+          className={`absolute mt-2 w-full bg-white border rounded shadow max-h-40 overflow-y-auto ${
             showOptions ? "visible" : "hidden"
           }`}
         >
@@ -115,10 +122,34 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
               key={opt.value}
             >
               <span
-                className="w-3 h-3 rounded-full mr-2"
+                className={`w-3 h-3 rounded-full mr-2 ${
+                  opt.alreadyUsed &&
+                  selectedOption &&
+                  selectedOption.color !== opt.color &&
+                  "opacity-10"
+                }`}
                 style={{ backgroundColor: opt.color }}
               ></span>
-              {opt.label}
+              <span
+                className={`${
+                  opt.alreadyUsed &&
+                  selectedOption &&
+                  selectedOption.color !== opt.color
+                    ? "text-gray-500"
+                    : "text-gray-900"
+                }`}
+              >
+                {opt.label}
+              </span>
+              {selectedOption && opt.color === selectedOption.color && (
+                <img src="images/icon-selected.svg" className="ml-auto" />
+              )}
+              {(!selectedOption || opt.color !== selectedOption.color) &&
+                opt.alreadyUsed && (
+                  <div className="ml-auto text-xs text-gray-500">
+                    Already Used
+                  </div>
+                )}
             </div>
           ))}
         </div>

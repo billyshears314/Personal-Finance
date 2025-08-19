@@ -42,7 +42,6 @@ export default function AddWithdrawToPotModal({
 
   return (
     <Modal title={title} description={description} onClose={onClose}>
-      <div></div>
       <InputField
         type="number"
         placeholderText="e.g. 20"

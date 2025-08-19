@@ -32,9 +32,9 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
 
   const bar = (color: string, percent: number) => {
     return (
-      <div className="my-2 h-2 w-full bg-beige-100 rounded-full">
+      <div className="my-2 h-2 w-full bg-beige-100 rounded-full overflow-hidden">
         <div
-          className={`h-full rounded-full`}
+          className={`h-full rounded-full transition-all duration-500 ease-in-out`}
           style={{ width: percent + "%", backgroundColor: color }}
         ></div>
       </div>
@@ -62,7 +62,10 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
       <div className="rounded-xl bg-white p-4">
         <div className="flex items-center">
           <TitleWithDot title={pot.name} color={pot.theme.color || "red"} />
-          <div className="ml-auto cursor-pointer" onClick={handleOpenDots}>
+          <div
+            className="ml-auto cursor-pointer w-6 h-6 flex items-center justify-center"
+            onClick={handleOpenDots}
+          >
             <img src="images/icon-ellipsis.svg" />
           </div>
         </div>

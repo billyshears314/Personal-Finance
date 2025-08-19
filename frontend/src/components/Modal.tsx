@@ -24,17 +24,19 @@ export default function Modal({
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg relative min-w-[300px] max-w-[450px]">
-        <div className="text-2xl font-bold mb-4">{title}</div>
+      <div className="bg-white p-6 rounded-lg shadow-lg relative w-[560px]">
+        <div className="flex mb-5">
+          <div className="text-2xl font-bold">{title}</div>
+          <button
+            onClick={onClose}
+            className="ml-auto text-gray-500 hover:text-black"
+          >
+            <img src="images/icon-close-modal.svg" width={25.5} height={25.5} />
+          </button>
+        </div>
         {description && (
-          <div className="text-gray-500 text-xs my-4">{description}</div>
+          <div className="text-gray-500 text-xs my-5">{description}</div>
         )}
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-black"
-        >
-          ×
-        </button>
         {children}
       </div>
     </div>,

@@ -19,6 +19,10 @@ const capitalizeEachWord = (str: string) => {
   return str.replace(/\b\w/g, (char) => char.toUpperCase());
 };
 
+const checkIfAlreadyUsed = (pots, theme) => {
+  return pots.some((pot) => pot.theme.id === theme.id);
+};
+
 export default function AddEditPotModal({
   onClose,
   mode = "add",
@@ -35,6 +39,7 @@ export default function AddEditPotModal({
   const editDescription = "Edit";
 
   const createPot = useAppStore((state) => state.createPot);
+  const pots = useAppStore((state) => state.pots);
 
   const { themes, fetchThemes } = useAppStore(
     useShallow((state) => ({
@@ -69,6 +74,7 @@ export default function AddEditPotModal({
       label: capitalizeEachWord(theme.name || "Unknown"),
       value: theme.id,
       color: theme.color || "red",
+      alreadyUsed: checkIfAlreadyUsed(pots, theme),
     };
   });
 
@@ -96,6 +102,7 @@ export default function AddEditPotModal({
         label="Color Tag"
         options={colorOptions}
         onChange={(value) => setColorTag(value as number)}
+        value={pot?.theme?.id}
       />
       <Button
         text={mode === "add" ? "Add Pot" : "Save Changes"}
