@@ -37,7 +37,7 @@ const InputField: React.FC<InputFieldProps> = ({
     <div className="flex flex-col my-2">
       <label
         htmlFor={selectId}
-        className="text-xxs font-bold text-gray-500 mb-1"
+        className="text-xs font-bold text-gray-500 mb-1"
       >
         {label}
       </label>

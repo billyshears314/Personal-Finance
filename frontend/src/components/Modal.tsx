@@ -26,7 +26,7 @@ export default function Modal({
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg relative w-[560px]">
         <div className="flex mb-5">
-          <div className="text-2xl font-bold">{title}</div>
+          <div className="text-3xl font-bold">{title}</div>
           <button
             onClick={onClose}
             className="ml-auto text-gray-500 hover:text-black"
@@ -35,7 +35,9 @@ export default function Modal({
           </button>
         </div>
         {description && (
-          <div className="text-gray-500 text-xs my-5">{description}</div>
+          <div className="text-gray-500 text-sm my-5 leading-normal">
+            {description}
+          </div>
         )}
         {children}
       </div>

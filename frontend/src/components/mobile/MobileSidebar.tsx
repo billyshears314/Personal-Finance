@@ -73,7 +73,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
   const pathname = usePathname();
 
   return (
-    <Box className="fixed bottom-0 w-full z-50 h-[52px] md:h-[74px] flex flex-row bg-gray-900 text-white rounded-tl-lg rounded-tr-lg px-4">
+    <Box className="fixed bottom-0 w-full z-50 h-[calc(52px+env(safe-area-inset-bottom))] md:h-[calc(74px+env(safe-area-inset-bottom))] flex flex-row bg-gray-900 text-white rounded-tl-lg rounded-tr-lg px-4">
       <nav className="flex w-full justify-between gap-2">
         {navItems.map((item) => {
           return (

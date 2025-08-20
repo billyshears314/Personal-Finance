@@ -37,7 +37,7 @@ export default {
         "category-beige": "#F8F4F0",
       },
       fontFamily: {
-        public: ["Public Sans", "sans-serif"],
+        sans: ["var(--font-public-sans)", "sans-serif"],
       },
       fontSize: {
         xxs: "0.625rem", // 10px

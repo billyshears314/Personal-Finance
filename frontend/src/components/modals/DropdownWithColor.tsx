@@ -84,7 +84,7 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
           {label && (
             <label
               htmlFor={selectId}
-              className="text-gray-500 text-xxs font-bold whitespace-nowrap mr-2 mb-1"
+              className="text-gray-500 text-xs font-bold whitespace-nowrap mr-2 mb-1"
             >
               {label}
             </label>
@@ -124,8 +124,7 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
               <span
                 className={`w-3 h-3 rounded-full mr-2 ${
                   opt.alreadyUsed &&
-                  selectedOption &&
-                  selectedOption.color !== opt.color &&
+                  !(selectedOption && selectedOption.color === opt.color) &&
                   "opacity-10"
                 }`}
                 style={{ backgroundColor: opt.color }}
@@ -133,8 +132,7 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
               <span
                 className={`${
                   opt.alreadyUsed &&
-                  selectedOption &&
-                  selectedOption.color !== opt.color
+                  !(selectedOption && selectedOption.color === opt.color)
                     ? "text-gray-500"
                     : "text-gray-900"
                 }`}

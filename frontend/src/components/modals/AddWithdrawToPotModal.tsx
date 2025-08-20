@@ -4,6 +4,7 @@ import Modal from "../Modal";
 import InputField from "./InputField";
 // import Dropdown from "./DropdownWithColor";
 import Button from "./Button";
+import PotBar from "../PotBar";
 import { useAppStore } from "@/stores/useAppStore";
 import { Pot } from "@/types";
 
@@ -19,11 +20,14 @@ export default function AddWithdrawToPotModal({
   pot,
   onClose,
 }: AddWithdrawToPotModalProps) {
-  const [amount, setAmount] = useState(null);
+  const [amount, setAmount] = useState<number | null>(null);
 
   const title =
     type === "add" ? `Add to '${pot.name}'` : `Withdraw from '${pot.name}'`;
-  const description = type === "add" ? "" : "";
+  const description =
+    type === "add"
+      ? "Add money to your pot to keep it separate from your main balance. As soon as you add this money, it will be deducted from your current balance."
+      : "Withdraw from your pot to put money back in your main balance. This will reduce the amount you have in this pot.";
 
   const depositMoneyToPot = useAppStore((state) => state.depositMoneyToPot);
   const withdrawMoneyFromPot = useAppStore(
@@ -46,8 +50,15 @@ export default function AddWithdrawToPotModal({
         type="number"
         placeholderText="e.g. 20"
         label={`Amount to ${type === "add" ? "Add" : "Withdraw"}`}
-        onChange={(value) => setAmount(value)}
+        onChange={(value) => setAmount(parseInt(value))}
       />
+      <div className="pt-4 pb-8">
+        <PotBar
+          pot={pot}
+          valueChange={type === "add" ? amount : -amount}
+          type={type}
+        />
+      </div>
       <Button
         text={type === "add" ? "Confirm Addition" : "Confirm Withdrawal"}
         onClick={confirm}

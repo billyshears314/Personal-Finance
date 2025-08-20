@@ -14,7 +14,7 @@ interface RowProps {
 const Row: React.FC<RowProps> = ({ transaction }) => {
   return (
     <tr className="border-b h-16">
-      <td className="p-4 font-bold">
+      <td className="p-4">
         <div className="flex items-center">
           <img
             src={transaction.party.iconUrl}
@@ -22,18 +22,18 @@ const Row: React.FC<RowProps> = ({ transaction }) => {
             className="rounded-full mr-4"
           />
           <div>
-            <div>{transaction.party.name}</div>
-            <div className="text-gray-500 text-xs font-thin">
+            <div className="font-bold">{transaction.party.name}</div>
+            <div className="text-gray-500 text-xs">
               {transaction.budget.name}
             </div>
           </div>
         </div>
       </td>
-      <td className="text-right font-semibold">
-        <div>
+      <td className="text-right">
+        <div className="font-bold">
           <TransactionAmount amount={transaction.amount} />
         </div>
-        <div className="text-gray-500 text-xs font-thin">
+        <div className="text-gray-500 text-xs">
           {formatDate(transaction.date)}
         </div>
       </td>

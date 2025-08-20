@@ -25,10 +25,8 @@ const Row: React.FC<RowProps> = ({ transaction }) => {
         </div>
       </td>
       <td className="text-gray-500 text-xs">{transaction.budget.name}</td>
-      <td className="text-gray-500 text-xs font-thin">
-        {formatDate(transaction.date)}
-      </td>
-      <td className="text-right font-semibold">
+      <td className="text-gray-500 text-xs">{formatDate(transaction.date)}</td>
+      <td className="text-right font-bold">
         <TransactionAmount amount={transaction.amount} />
       </td>
     </tr>
