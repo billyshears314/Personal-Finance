@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useShallow } from "zustand/shallow";
 import SpendingSummaryWidget from "./components/SpendingSummary";
-import SpendingCard from "../../components/SpendingCard";
+import SpendingCard from "./components/SpendingCard";
 import ContentContainer from "../../components/ContentContainer";
 import AddEditBudgetModal from "@/components/modals/AddEditBudgetModal";
 import { useAppStore } from "@/stores/useAppStore";
@@ -48,9 +48,10 @@ const BudgetPage = () => {
                 return (
                   <div className="mb-8" key={budget.id}>
                     <SpendingCard
-                      spent={budget.spent}
-                      max={budget.max}
-                      color={budget.theme.color || "red"}
+                      budget={budget}
+                      // spent={budget.spent}
+                      // max={budget.max}
+                      // color={budget.theme.color || "red"}
                     />
                   </div>
                 );

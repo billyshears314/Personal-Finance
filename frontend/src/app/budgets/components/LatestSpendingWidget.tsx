@@ -1,4 +1,4 @@
-import DetailsLink from "./DetailsLink";
+import DetailsLink from "@/components/DetailsLink";
 
 interface LatestSpendingRowProps {
   icon: string;

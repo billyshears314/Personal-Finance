@@ -83,30 +83,6 @@ const SpendingSummaryWidget: React.FC = () => {
               );
             })}
           </div>
-          {/* <SpendingSummaryItem
-            name="Entertainment"
-            amount={15.0}
-            limit={50.0}
-            color="green"
-          />
-          <SpendingSummaryItem
-            name="Bills"
-            amount={150.0}
-            limit={750.0}
-            color="cyan"
-          />
-          <SpendingSummaryItem
-            name="Dining Out"
-            amount={133.0}
-            limit={75.0}
-            color="yellow"
-          />
-          <SpendingSummaryItem
-            name="Personal Care"
-            amount={40.0}
-            limit={100.0}
-            color="navy"
-          /> */}
         </div>
       </div>
     </div>

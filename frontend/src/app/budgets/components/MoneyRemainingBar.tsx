@@ -1,5 +1,5 @@
-import Bar from "./Bar";
-import MoneyChunk from "./MoneyChunk";
+import Bar from "@/components/Bar";
+import MoneyChunk from "@/components/MoneyChunk";
 
 interface MoneyRemainingBarProps {
   color: string;

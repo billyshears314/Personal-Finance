@@ -3,10 +3,12 @@ import Modal from "../Modal";
 import InputField from "./InputField";
 import Dropdown from "./DropdownWithColor";
 import Button from "./Button";
+import { Budget } from "@/types";
 
 type Mode = "add" | "edit";
 
 interface AddEditBudgetModalProps {
+  budget: Budget;
   onClose: () => void;
   mode?: Mode;
 }
