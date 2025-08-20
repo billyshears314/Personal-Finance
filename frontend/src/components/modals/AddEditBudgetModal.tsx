@@ -1,36 +1,54 @@
 import { useState } from "react";
+import { useShallow } from "zustand/shallow";
 import Modal from "../Modal";
 import InputField from "./InputField";
-import Dropdown from "./DropdownWithColor";
+// import Dropdown from "../Dropdown";
+import DropdownWithColor from "./DropdownWithColor";
 import Button from "./Button";
 import { Budget } from "@/types";
+import { useAppStore } from "@/stores/useAppStore";
 
 type Mode = "add" | "edit";
 
 interface AddEditBudgetModalProps {
-  budget: Budget;
-  onClose: () => void;
+  budget?: Budget;
   mode?: Mode;
+  onClose: () => void;
 }
 
+const capitalizeEachWord = (str: string) => {
+  return str.replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
+const checkIfAlreadyUsed = (budgets, theme) => {
+  return budgets.some((budget) => budget.theme.id === theme.id);
+};
+
 export default function AddEditBudgetModal({
+  budget,
   onClose,
   mode = "add",
 }: AddEditBudgetModalProps) {
+  console.log("ATTEMPT");
   const [budgetCategory, setBudgetCategory] = useState("");
-  const [maximumSpend, setMaximumSpend] = useState<number | null>(null);
-  const [theme, setTheme] = useState<number | null>();
+  const [maximumSpend, setMaximumSpend] = useState<number | null>(
+    budget?.max ?? null
+  );
+  const [colorTag, setColorTag] = useState<number | null>(
+    budget?.theme?.id || null
+  );
+  console.log("1");
 
   const addDescription =
-    "Create a pot to set savings targets. These can help keep you on track as you save for special purchases.";
+    "Choose a category to set a spending budget. These categories can help you monitor spending.";
   const editDescription =
-    "If your saving targets change, feel free to update your pots";
+    "As your budgets change, feel free to update your spending limits.";
 
   const save = () => {
     console.log("SAVE");
     console.log("Budget Category: " + budgetCategory);
     console.log("Maximum Spend: " + maximumSpend);
-    console.log("Theme: " + theme);
+    console.log("Theme: " + colorTag);
   };
 
   const budgetCategoryOptions = [
@@ -52,23 +70,31 @@ export default function AddEditBudgetModal({
     },
   ];
 
-  const themeOptions = [
-    {
-      label: "Green",
-      value: 1,
-      color: "red",
-    },
-    {
-      label: "Red",
-      value: 2,
-      color: "red",
-    },
-    {
-      label: "Blue",
-      value: 3,
-      color: "red",
-    },
-  ];
+  const { themes } = useAppStore(
+    useShallow((state) => ({
+      themes: state.themes,
+      fetchThemes: state.fetchThemes,
+      loading: state.loading,
+      error: state.error,
+    }))
+  );
+
+  // TODO: FIX THIS...
+  // useEffect(() => {
+  //   console.log("USE EFFECT");
+  //   fetchThemes();
+  // }, [fetchThemes]);
+
+  const budgets = useAppStore((state) => state.budgets);
+
+  const colorOptions = themes.map((theme) => {
+    return {
+      label: capitalizeEachWord(theme.name || "Unknown"),
+      value: theme.id,
+      color: theme.color || "red",
+      alreadyUsed: checkIfAlreadyUsed(budgets, theme),
+    };
+  });
 
   return (
     <Modal
@@ -76,10 +102,12 @@ export default function AddEditBudgetModal({
       description={mode === "add" ? addDescription : editDescription}
       onClose={onClose}
     >
-      <Dropdown
+      <DropdownWithColor
         label="Budget Category"
+        placeholderText="Choose Budget"
         options={budgetCategoryOptions}
         onChange={(value) => setBudgetCategory(value as string)}
+        hasColor={false}
       />
       <InputField
         label="Maximum Spend"
@@ -87,10 +115,11 @@ export default function AddEditBudgetModal({
         placeholderText="e.g. 2000"
         onChange={(value) => setMaximumSpend(parseInt(value))}
       />
-      <Dropdown
+      <DropdownWithColor
         label="Theme"
-        options={themeOptions}
-        onChange={(value) => setTheme(value as number)}
+        options={colorOptions}
+        onChange={(value) => setColorTag(value as number)}
+        value={colorTag}
       />
       <Button
         text={mode === "add" ? "Add Budget" : "Save Changes"}

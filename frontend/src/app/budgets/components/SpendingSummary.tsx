@@ -1,56 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useShallow } from "zustand/shallow";
 import { Donut } from "../../../components";
+import { useAppStore } from "@/stores/useAppStore";
+import { Budget } from "@/types";
 
-interface SpendingSummaryItemProps {
-  name: string;
-  amount: number;
-  limit: number;
-  color: string;
+interface BudgetCardProps {
+  budget: Budget;
 }
 
-const spendingSummaryData = [
-  {
-    name: "Entertainment",
-    amount: 15,
-    limit: 50,
-    color: "green",
-  },
-  {
-    name: "Bills",
-    amount: 150,
-    limit: 750,
-    color: "cyan",
-  },
-  {
-    name: "Dining Out",
-    amount: 133,
-    limit: 75,
-    color: "yellow",
-  },
-  {
-    name: "Personal Care",
-    amount: 40,
-    limit: 100,
-    color: "navy",
-  },
-];
-
-const SpendingSummaryItem: React.FC<SpendingSummaryItemProps> = ({
-  name,
-  amount,
-  limit,
-  color,
-}) => {
+const BudgetCard: React.FC<BudgetCardProps> = ({ budget }) => {
   return (
     <div className="flex py-4">
-      <div className={`h-6 w-1 rounded-full bg-category-${color}`}></div>
-      <div className="ml-4 text-gray-500">{name}</div>
+      <div
+        className={`h-6 w-1 rounded-full`}
+        style={{ background: budget.theme.color }}
+      ></div>
+      <div className="ml-4 text-gray-500">{budget.name}</div>
       <div className="flex ml-auto text-right">
         <div className="text-base lg:text-lg mr-2 font-bold text-gray-900">
-          ${amount.toFixed(2)}
+          ${budget.spent.toFixed(2)}
         </div>
         <div className="text-sm lg:text-base text-gray-500 mt-0.5">
-          of ${limit.toFixed(2)}
+          of ${budget.max.toFixed(2)}
         </div>
       </div>
     </div>
@@ -58,6 +29,19 @@ const SpendingSummaryItem: React.FC<SpendingSummaryItemProps> = ({
 };
 
 const SpendingSummaryWidget: React.FC = () => {
+  const { budgets } = useAppStore(
+    useShallow((state) => ({
+      budgets: state.budgets,
+      fetchBudgets: state.fetchBudgets,
+      loading: state.loading,
+      error: state.error,
+    }))
+  );
+
+  // useEffect(() => {
+  //   fetchBudgets();
+  // }, [fetchBudgets]);
+
   return (
     <div className="rounded-xl bg-white p-0 lg:p-4 md-only:flex">
       <div className="flex justify-center my-12 md-only:my-0 relative">
@@ -71,16 +55,8 @@ const SpendingSummaryWidget: React.FC = () => {
         <div className="px-8 py-4">
           <h3 className="font-bold mb-4 text-lg">Spending Summary</h3>
           <div className="divide-y divide-gray-300">
-            {spendingSummaryData.map((item) => {
-              return (
-                <SpendingSummaryItem
-                  key={item.name}
-                  name={item.name}
-                  amount={item.amount}
-                  limit={item.limit}
-                  color={item.color}
-                />
-              );
+            {budgets.map((budget) => {
+              return <BudgetCard budget={budget} key={budget.id} />;
             })}
           </div>
         </div>

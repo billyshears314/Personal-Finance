@@ -10,9 +10,9 @@ import { Pot } from "@/types";
 type Mode = "add" | "edit";
 
 interface AddEditPotModalProps {
-  onClose: () => void;
-  mode?: Mode;
   pot?: Pot;
+  mode?: Mode;
+  onClose: () => void;
 }
 
 const capitalizeEachWord = (str: string) => {
@@ -53,8 +53,6 @@ export default function AddEditPotModal({
   useEffect(() => {
     fetchThemes();
   }, [fetchThemes]);
-
-  useEffect(() => {});
 
   const save = () => {
     if (!name || target === null) {
@@ -102,7 +100,7 @@ export default function AddEditPotModal({
         label="Color Tag"
         options={colorOptions}
         onChange={(value) => setColorTag(value as number)}
-        value={pot?.theme?.id}
+        value={colorTag}
       />
       <Button
         text={mode === "add" ? "Add Pot" : "Save Changes"}

@@ -41,8 +41,11 @@ const SpendingCard: React.FC<SpendingCardProps> = ({ budget }) => {
     <>
       <div className="p-8 rounded-xl bg-white">
         <div className="flex items-center mb-4">
-          <TitleWithDot title="Entertainment" color={budget.theme.color} />
-          <div className="ml-auto relative" onClick={handleOpenMenu}>
+          <TitleWithDot title={budget.name} color={budget.theme.color} />
+          <div
+            className="relative ml-auto cursor-pointer w-6 h-6 flex items-center justify-center"
+            onClick={handleOpenMenu}
+          >
             <img src="images/icon-ellipsis.svg" />
             {menuOpen && (
               <div className="absolute top-5 right-0 whitespace-nowrap flex flex-col divide-y bg-white py-2 px-4 border rounded-lg">
@@ -67,7 +70,7 @@ const SpendingCard: React.FC<SpendingCardProps> = ({ budget }) => {
       </div>
       {modalType === "edit" && (
         <AddEditBudgetModal
-          mode={modalType}
+          mode={"edit"}
           budget={budget}
           onClose={() => setModalType(null)}
         />
