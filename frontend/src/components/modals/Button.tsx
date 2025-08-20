@@ -9,13 +9,13 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({ text, onClick, type = "primary" }) => {
   const classNames = {
     primary: "bg-gray-900 text-white",
-    confirm: "bg-beige-100 text-gray-900 font-bold",
-    cancel: "bg-beige-100 text-gray-900 font-bold",
+    confirm: "bg-[#C94736] text-white opacity-80 py-5",
+    cancel: "bg-white-100 text-gray-900 py-5",
   };
 
   return (
     <button
-      className={`px-3 py-3 rounded ${classNames[type]} w-full`}
+      className={`px-3 py-3 rounded-lg ${classNames[type]} w-full`}
       onClick={onClick}
     >
       {text}

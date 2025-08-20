@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import TitleWithDot from "../../../components/TitleWithDot";
 import Button from "../../../components/Button";
 import AddWithdrawToPotModal from "@/components/modals/AddWithdrawToPotModal";
 import AddEditPotModal from "@/components/modals/AddEditPotModal";
+import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 import PotBar from "../../../components/PotBar";
 import { Pot } from "@/types";
 
@@ -15,6 +16,7 @@ interface PotCardProps {
 
 const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
   const [modalType, setModalType] = useState<ModalType>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleAddOpen = (potName: string) => {
     console.log("POT NAME: " + potName);
@@ -26,9 +28,26 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
     setModalType("withdraw");
   };
 
-  const handleOpenDots = () => {
+  const handleOpenMenu = () => {
+    setMenuOpen(true);
+  };
+
+  const handleOpenEdit = () => {
+    console.log("HANDLE OPEN EDIT");
     setModalType("edit");
   };
+
+  const handleOpenDelete = () => {
+    setModalType("delete");
+  };
+
+  const handleDelete = () => {
+    console.log("HANDLE DELETE");
+  };
+
+  useEffect(() => {
+    if (modalType) setMenuOpen(false);
+  }, [modalType]);
 
   return (
     <>
@@ -36,10 +55,20 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
         <div className="flex items-center">
           <TitleWithDot title={pot.name} color={pot.theme.color || "red"} />
           <div
-            className="ml-auto cursor-pointer w-6 h-6 flex items-center justify-center"
-            onClick={handleOpenDots}
+            className="relative ml-auto cursor-pointer w-6 h-6 flex items-center justify-center"
+            onClick={handleOpenMenu}
           >
             <img src="images/icon-ellipsis.svg" />
+            {menuOpen && (
+              <div className="absolute top-5 right-0 whitespace-nowrap flex flex-col divide-y bg-white py-2 px-4 border rounded-lg">
+                <button onClick={handleOpenEdit} className="text-left py-2">
+                  Edit Budget
+                </button>
+                <button onClick={handleOpenDelete} className="text-left py-2">
+                  Delete Budget
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <div className="my-8">
@@ -75,6 +104,14 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
         <AddEditPotModal
           mode={modalType}
           pot={pot}
+          onClose={() => setModalType(null)}
+        />
+      )}
+      {modalType === "delete" && (
+        <DeleteConfirmationModal
+          title={pot.name}
+          entityType={"pot"}
+          onDelete={handleDelete}
           onClose={() => setModalType(null)}
         />
       )}
