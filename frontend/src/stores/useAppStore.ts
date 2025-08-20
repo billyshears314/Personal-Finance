@@ -40,6 +40,11 @@ export interface AppState {
   fetchOverview: () => Promise<void>;
   fetchPots: () => Promise<void>;
   createPot: (newPot: Omit<Pot, "id">) => Promise<void>;
+  updatePot: (id: number, updatedPot: Partial<Pot>) => Promise<void>;
+  deletePot: (id: number) => Promise<void>;
+  createBudget: (newBudget: Omit<Budget, "id">) => Promise<void>;
+  updateBudget: (id: number, updatedBudget: Partial<Budget>) => Promise<void>;
+  deleteBudget: (id: number) => Promise<void>;
   fetchBudgets: () => Promise<void>;
   fetchTransactions: (
     paginationOptions: PaginationOptions
@@ -145,6 +150,98 @@ export const useAppStore = create<AppState>((set, get) => ({
     } catch (error: unknown) {
       set({
         error: getErrorMessage(error, "Failed to create pot"),
+        loading: false,
+      });
+    }
+  },
+
+  updatePot: async (id, updatedPot) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.put<Pot>(
+        `${APIHost}/pots/${id}`,
+        updatedPot
+      );
+      set((state) => ({
+        pots: state.pots.map((pot) => (pot.id === id ? response.data : pot)),
+        loading: false,
+      }));
+    } catch (error: unknown) {
+      set({
+        error: getErrorMessage(error, "Failed to update pot"),
+        loading: false,
+      });
+    }
+  },
+
+  deletePot: async (id) => {
+    set({ loading: true, error: null });
+    try {
+      await axios.delete(`${APIHost}/pots/${id}`);
+      set((state) => ({
+        pots: state.pots.filter((pot) => pot.id !== id),
+        loading: false,
+      }));
+    } catch (error: unknown) {
+      set({
+        error: getErrorMessage(error, "Failed to delete pot"),
+        loading: false,
+      });
+    }
+  },
+
+  createBudget: async (newBudget) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.post<Budget>(
+        `${APIHost}/budgets`,
+        newBudget
+      );
+      set((state) => ({
+        budgets: [...state.budgets, response.data],
+        loading: false,
+      }));
+    } catch (error: unknown) {
+      set({
+        error: getErrorMessage(error, "Failed to create budget"),
+        loading: false,
+      });
+    }
+  },
+
+  updateBudget: async (id, updatedBudget) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.put<Budget>(
+        `${APIHost}/budgets/${id}`,
+        updatedBudget
+      );
+
+      set((state) => ({
+        budgets: state.budgets.map((budget) =>
+          budget.id === id ? response.data : budget
+        ),
+        loading: false,
+      }));
+    } catch (error: unknown) {
+      set({
+        error: getErrorMessage(error, "Failed to update budget"),
+        loading: false,
+      });
+    }
+  },
+
+  deleteBudget: async (id) => {
+    set({ loading: true, error: null });
+    try {
+      await axios.delete(`${APIHost}/budgets/${id}`);
+      set((state) => ({
+        budgets: state.budgets.filter((budget) => budget.id !== id),
+        loading: false,
+      }));
+    } catch (error: unknown) {
+      set({
+        error: getErrorMessage(error, "Failed to delete budget"),
         loading: false,
       });
     }

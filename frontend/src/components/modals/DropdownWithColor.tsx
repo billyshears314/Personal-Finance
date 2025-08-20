@@ -15,7 +15,6 @@ interface DropdownWithColorProps {
   id?: string;
   value?: string | number;
   onChange: (value: string | number) => void;
-  hasColor?: boolean;
   placeholderText?: string;
 }
 
@@ -25,7 +24,6 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
   id,
   value,
   onChange,
-  hasColor = true,
   placeholderText = "Choose Color",
 }) => {
   // console.log("OPTIONS: " + JSON.stringify(options, null, 2));
@@ -69,12 +67,12 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
         >
           {selectedOption ? (
             <div className="flex items-center cursor-pointer">
-              {hasColor && (
+              {
                 <span
                   className="w-3 h-3 rounded-full mr-2"
                   style={{ backgroundColor: selectedOption.color }}
                 ></span>
-              )}
+              }
               <span>{selectedOption.label}</span>
               <img src="images/icon-caret-down.svg" className="ml-auto" />
             </div>
@@ -96,20 +94,18 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
               onClick={() => handleClickOption(opt)}
               key={opt.value}
             >
-              {hasColor && (
+              {
                 <span
                   className={`w-3 h-3 rounded-full mr-2 ${
-                    hasColor &&
                     opt.alreadyUsed &&
                     !(selectedOption && selectedOption.color === opt.color) &&
                     "opacity-10"
                   }`}
                   style={{ backgroundColor: opt.color }}
                 ></span>
-              )}
+              }
               <span
                 className={`${
-                  hasColor &&
                   opt.alreadyUsed &&
                   !(selectedOption && selectedOption.color === opt.color)
                     ? "text-gray-500"
@@ -118,13 +114,10 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
               >
                 {opt.label}
               </span>
-              {hasColor &&
-                selectedOption &&
-                opt.color === selectedOption.color && (
-                  <img src="images/icon-selected.svg" className="ml-auto" />
-                )}
+              {selectedOption && opt.color === selectedOption.color && (
+                <img src="images/icon-selected.svg" className="ml-auto" />
+              )}
               {(!selectedOption || opt.color !== selectedOption.color) &&
-                hasColor &&
                 opt.alreadyUsed && (
                   <div className="ml-auto text-xs text-gray-500">
                     Already Used

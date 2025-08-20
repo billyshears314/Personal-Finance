@@ -7,6 +7,7 @@ import AddEditPotModal from "@/components/modals/AddEditPotModal";
 import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 import PotBar from "../../../components/PotBar";
 import { Pot } from "@/types";
+import { useAppStore } from "@/stores/useAppStore";
 
 type ModalType = "add" | "withdraw" | "edit" | "delete" | null;
 
@@ -17,6 +18,8 @@ interface PotCardProps {
 const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
   const [modalType, setModalType] = useState<ModalType>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const deletePot = useAppStore((state) => state.deletePot);
 
   const handleAddOpen = (potName: string) => {
     console.log("POT NAME: " + potName);
@@ -42,7 +45,7 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
   };
 
   const handleDelete = () => {
-    console.log("HANDLE DELETE");
+    deletePot(pot.id);
   };
 
   useEffect(() => {
@@ -62,10 +65,10 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
             {menuOpen && (
               <div className="absolute top-5 right-0 whitespace-nowrap flex flex-col divide-y bg-white py-2 px-4 border rounded-lg">
                 <button onClick={handleOpenEdit} className="text-left py-2">
-                  Edit Budget
+                  Edit Pot
                 </button>
                 <button onClick={handleOpenDelete} className="text-left py-2">
-                  Delete Budget
+                  Delete Pot
                 </button>
               </div>
             )}

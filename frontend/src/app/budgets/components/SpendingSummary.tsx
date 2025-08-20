@@ -38,6 +38,9 @@ const SpendingSummaryWidget: React.FC = () => {
     }))
   );
 
+  const totalSpent = budgets.reduce((sum, budget) => sum + budget.spent, 0);
+  const totalMax = budgets.reduce((sum, budget) => sum + budget.max, 0);
+
   // useEffect(() => {
   //   fetchBudgets();
   // }, [fetchBudgets]);
@@ -45,10 +48,12 @@ const SpendingSummaryWidget: React.FC = () => {
   return (
     <div className="rounded-xl bg-white p-0 lg:p-4 md-only:flex">
       <div className="flex justify-center my-12 md-only:my-0 relative">
-        <Donut amount={338} limit={975} />
+        <Donut amount={totalSpent} limit={totalMax} />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-          <div className="text-3xl font-semibold mb-1 tracking-wide">$338</div>
-          <div className="text-xs text-gray-500">of $975 limit</div>
+          <div className="text-3xl font-semibold mb-1 tracking-wide">
+            ${totalSpent}
+          </div>
+          <div className="text-xs text-gray-500">of ${totalMax} limit</div>
         </div>
       </div>
       <div className="md-only:w-full">

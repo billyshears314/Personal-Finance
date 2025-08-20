@@ -39,6 +39,7 @@ export default function AddEditPotModal({
   const editDescription = "Edit";
 
   const createPot = useAppStore((state) => state.createPot);
+  const updatePot = useAppStore((state) => state.updatePot);
   const pots = useAppStore((state) => state.pots);
 
   const { themes, fetchThemes } = useAppStore(
@@ -55,13 +56,22 @@ export default function AddEditPotModal({
   }, [fetchThemes]);
 
   const save = () => {
-    if (!name || target === null) {
+    if (!name || target === null || colorTag === null) {
       alert("Please fill out all fields");
       return;
     }
 
     if (mode === "add" && colorTag) {
       createPot({ name, saved: 0, target, theme: { id: colorTag } });
+    }
+
+    if (mode === "edit" && colorTag) {
+      updatePot(pot.id, {
+        name,
+        saved: pot.saved,
+        target,
+        theme: { id: colorTag },
+      });
     }
 
     onClose();

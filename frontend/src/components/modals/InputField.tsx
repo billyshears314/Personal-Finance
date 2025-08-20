@@ -5,17 +5,17 @@ type InputFieldType = "text" | "number";
 
 interface InputFieldProps {
   label: string;
-  placeholderText: string;
+  placeholderText?: string;
   onChange: (value: string) => void;
   id?: string;
-  initialValue?: string;
+  initialValue?: string | number;
   type?: InputFieldType;
   maxCharacters?: number;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
   label,
-  placeholderText,
+  placeholderText = "",
   onChange,
   id,
   initialValue = "",
@@ -49,7 +49,7 @@ const InputField: React.FC<InputFieldProps> = ({
         onChange={(e) => handleOnChange(e.target.value)}
         className="border p-2 rounded border-black text-xs"
       ></input>
-      {maxCharacters && (
+      {typeof value === "string" && maxCharacters && (
         <div className="text-right text-xxs text-gray-500 mt-1 tracking-wider">
           {value.length} of {maxCharacters} characters left
         </div>
