@@ -1,5 +1,4 @@
 import { useId, useState } from "react";
-// import { Place } from "@mui/icons-material";
 
 type InputFieldType = "text" | "number";
 

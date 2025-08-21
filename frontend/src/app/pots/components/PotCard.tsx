@@ -22,13 +22,11 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
 
   const deletePot = useAppStore((state) => state.deletePot);
 
-  const handleAddOpen = (potName: string) => {
-    console.log("POT NAME: " + potName);
+  const handleAddOpen = () => {
     setModalType("add");
   };
 
-  const handleWithdrawOpen = (potName: string) => {
-    console.log("POT NAME: " + potName);
+  const handleWithdrawOpen = () => {
     setModalType("withdraw");
   };
 
@@ -37,7 +35,6 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
   };
 
   const handleOpenEdit = () => {
-    console.log("HANDLE OPEN EDIT");
     setModalType("edit");
   };
 
@@ -80,7 +77,7 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
               type="secondary"
               text="+ Add Money"
               fullWidth
-              onClick={() => handleAddOpen(pot.name)}
+              onClick={handleAddOpen}
             />
           </div>
           <div className="w-1/2">
@@ -88,7 +85,7 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
               type="secondary"
               text="Withdraw"
               fullWidth
-              onClick={() => handleWithdrawOpen(pot.name)}
+              onClick={handleWithdrawOpen}
             />
           </div>
         </div>

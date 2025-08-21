@@ -21,7 +21,6 @@ const SpendingCard: React.FC<SpendingCardProps> = ({ budget }) => {
   };
 
   const handleOpenEdit = () => {
-    console.log("HANDLE OPEN EDIT");
     setModalType("edit");
   };
 

@@ -19,9 +19,6 @@ const Bar: React.FC<BarProps> = ({
   // Don't exceed 100%
   value = Math.min(value, 100);
 
-  console.log("VALUE: " + value);
-  console.log("VALUE CHANGE: " + valueChange);
-
   const isWithdraw = type === "withdraw";
 
   return (

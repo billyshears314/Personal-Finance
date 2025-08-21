@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useShallow } from "zustand/shallow";
 import { Donut } from "../../../components";
 import { useAppStore } from "@/stores/useAppStore";

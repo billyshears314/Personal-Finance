@@ -69,9 +69,6 @@ const Sidebar: React.FC<SidebarProps> = () => {
   return (
     <Box className="fixed w-64 h-full flex bg-gray-900 text-white flex-col min-h-screen rounded-tr-lg rounded-br-lg">
       <div className="p-6 border-gray-700">
-        {/* <Typography variant="h6" className="font-bold">
-          finance          
-        </Typography> */}
         <img src="images/logo-large.svg" />
       </div>
       <nav className="w-full flex-1 pr-6 space-y-4 text-left">

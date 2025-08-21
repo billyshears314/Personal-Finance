@@ -54,8 +54,8 @@ const getCategoryOffset = (
     0
   );
 
-  console.log("------------------");
-  console.log(calculateOffset(circumference, (sum / total) * 100));
+  // console.log("------------------");
+  // console.log(calculateOffset(circumference, (sum / total) * 100));
 
   return (
     -calculateOffset(circumference, (sum / total) * 100) +

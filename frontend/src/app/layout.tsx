@@ -9,16 +9,6 @@ const publicSans = Public_Sans({
   variable: "--font-public-sans",
 });
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
-
 export const metadata: Metadata = {
   title: "Personal Finance",
   description: "A personal finance application",
@@ -37,9 +27,6 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1, viewport-fit=cover"
         ></meta>
       </head>
-      {/* <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      > */}
       <body className="antialiased">
         <div className="flex pb-[50px] lg:pb-0">
           <Sidebar />

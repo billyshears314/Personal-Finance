@@ -47,22 +47,6 @@ const TransactionsTableMobile: React.FC<TransactionsTableMobileProps> = ({
   return (
     <div className="table-container bg-white">
       <table className="w-full mt-4">
-        {/* <thead>
-          <tr className="border-b h-12">
-            <th className="text-left font-normal text-gray-500 text-xs">
-              Recipient / Sender
-            </th>
-            <th className="text-left font-normal text-gray-500 text-xs">
-              Category
-            </th>
-            <th className="text-left font-normal text-gray-500 text-xs">
-              Transaction Date
-            </th>
-            <th className="text-right font-normal text-gray-500 text-xs">
-              Amount
-            </th>
-          </tr>
-        </thead> */}
         <tbody className="divide-y">
           {transactions.length > 0 &&
             transactions.map((transaction) => {

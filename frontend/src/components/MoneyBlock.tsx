@@ -3,7 +3,6 @@ import { Typography, Card, CardContent } from "@mui/material";
 
 interface MoneyBlockProps {
   label: string;
-  //   value: number;
   value: string;
 }
 

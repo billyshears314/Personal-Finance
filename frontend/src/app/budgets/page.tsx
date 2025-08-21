@@ -12,7 +12,6 @@ const BudgetPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddNewBudget = () => {
-    console.log("HANDLE ADD NEW Budget");
     setIsModalOpen(true);
   };
 
@@ -47,12 +46,7 @@ const BudgetPage = () => {
               {budgets.map((budget) => {
                 return (
                   <div className="mb-8" key={budget.id}>
-                    <SpendingCard
-                      budget={budget}
-                      // spent={budget.spent}
-                      // max={budget.max}
-                      // color={budget.theme.color || "red"}
-                    />
+                    <SpendingCard budget={budget} />
                   </div>
                 );
               })}

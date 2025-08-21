@@ -26,9 +26,6 @@ const DropdownWithColor: React.FC<DropdownWithColorProps> = ({
   onChange,
   placeholderText = "Choose Color",
 }) => {
-  // console.log("OPTIONS: " + JSON.stringify(options, null, 2));
-  // console.log("VALUE: " + value);
-
   const generatedId = useId();
   const selectId = id || generatedId;
 
