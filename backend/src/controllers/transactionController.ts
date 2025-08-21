@@ -28,30 +28,7 @@ export const getPaginatedTransactions = async (req: Request, res: Response) => {
     const budgetFilter = (req.query.budget as string) || "";
     const sort = (req.query.sort as string) || "";
 
-    console.log("SORT: " + sort);
-
     const transactionRepository = AppDataSource.getRepository(Transaction);
-
-    // const [transactions, total] = await transactionRepository.findAndCount({
-    //   skip: (page - 1) * limit,
-    //   take: limit,
-    //   // order: {
-    //   //   createdAt: "DESC", // Optional: sort by creation date
-    //   // },
-    // });
-
-    // const query = transactionRepository
-    //   .createQueryBuilder("transaction")
-    //   .leftJoinAndSelect("transaction.party", "party")
-    //   .leftJoinAndSelect("transaction.budget", "budget")
-    //   .where("LOWER(party.name) LIKE :search", {
-    //     search: `%${search.toLowerCase()}%`,
-    //   })
-    //   .skip((page - 1) * limit)
-    //   .take(limit);
-    // // .orderBy("transaction.date", "DESC");
-
-    // const [transactions, total] = await query.getManyAndCount();
 
     const query = transactionRepository
       .createQueryBuilder("transaction")
@@ -97,10 +74,7 @@ export const getPaginatedTransactions = async (req: Request, res: Response) => {
     const [transactions, total] = await query
       .skip((page - 1) * limit)
       .take(limit)
-      // .orderBy("transaction.date", "DESC")
       .getManyAndCount();
-
-    console.log(query.getSql(), query.getParameters());
 
     res.json({
       data: transactions,
