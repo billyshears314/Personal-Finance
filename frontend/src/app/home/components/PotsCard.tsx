@@ -15,7 +15,7 @@ const PotsCard = ({ pots, totalSaved }: PotsCardProps) => {
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex w-full md:w-2/5 p-4 bg-beige-100 rounded-xl items-center">
           <div className="h-full flex justify-center mr-8">
-            <img src="images/icon-pot.svg" className="w-10" />
+            <img src="images/icon-pot.svg" width="40" className="w-10" />
           </div>
           <div>
             <div className="text-gray-500 mb-4">Total Saved</div>

@@ -13,19 +13,18 @@ import { PaginationMetaData } from "@/types";
 
 const ClientTransactions = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [categoryFilter, setCategoryFilter] = useState("");
-  const router = useRouter();
-
-  console.log("PAGE RERENDER: TRANSACTIONS PAGE");
-
+  const [sort, setSort] = useState("");
   const [paginationData, setPaginationData] = useState<PaginationMetaData>();
 
   useEffect(() => {
     setSearch(searchParams.get("search") || "");
     setPage(Number(searchParams.get("page")) || 1);
     setCategoryFilter(searchParams.get("category") || "");
+    setSort(searchParams.get("sort") || "");
   }, [searchParams]);
 
   const { budgets, fetchBudgets } = useAppStore(
@@ -46,20 +45,12 @@ const ClientTransactions = () => {
     }))
   );
 
-  // Debounce the fetchTransactions call itself
-  // const debouncedFetch = useCallback(
-  //   debounce((page: number, search: string, categoryFilter: string) => {
-  //     fetchTransactions({ page, search, categoryFilter: categoryFilter });
-  //   }, 300),
-  //   [fetchTransactions]
-  // );
-
   // Debounced fetch for search only
   const debouncedFetchBySearch = useCallback(
     debounce((searchValue: string) => {
-      fetchTransactions({ page, search: searchValue, categoryFilter });
+      fetchTransactions({ page, search: searchValue, categoryFilter, sort });
     }, 300),
-    [fetchTransactions, page, categoryFilter]
+    [fetchTransactions, page, categoryFilter, sort]
   );
 
   useEffect(() => {
@@ -68,6 +59,7 @@ const ClientTransactions = () => {
         page,
         search,
         categoryFilter,
+        sort,
       })) as PaginationMetaData;
       setPaginationData(result);
     }
@@ -75,65 +67,51 @@ const ClientTransactions = () => {
     fetchBudgets();
   }, []);
 
-  // // Trigger immediate fetch when page or categoryFilter changes
-  // useEffect(() => {
-  //   fetchBudgets();
-  // }, [fetchBudgets]);
-
-  // // Trigger immediate fetch when page or categoryFilter changes
-  // useEffect(() => {
-  //   async function loadTransactions() {
-  //     const result = (await fetchTransactions({
-  //       page,
-  //       search,
-  //       categoryFilter,
-  //     })) as PaginationMetaData;
-  //     setPaginationData(result);
-  //   }
-  //   loadTransactions();
-  // }, [page, categoryFilter, fetchTransactions]);
-
   // Trigger debounced fetch when search changes
   useEffect(() => {
-    console.log("USE EFFECT C");
     debouncedFetchBySearch(search);
     return debouncedFetchBySearch.cancel;
   }, [search, debouncedFetchBySearch]);
 
   useEffect(() => {
-    console.log("USE EFFECT D");
-    updateUrlParams({ search, page, category: categoryFilter });
-  }, [search, page, categoryFilter]);
+    const updateUrlParams = (newParams: {
+      search?: string;
+      page?: number;
+      category?: string;
+      sort?: string;
+    }) => {
+      const params = new URLSearchParams(window.location.search);
 
-  // TODO: Any way to simplify or separate any of this logic
-  const updateUrlParams = (newParams: {
-    search?: string;
-    page?: number;
-    category?: string;
-  }) => {
-    const params = new URLSearchParams(window.location.search);
+      // Update with current state
+      if (newParams.search === "") {
+        params.delete("search");
+      } else {
+        params.set("search", search);
+      }
 
-    // Update with current state
-    if (newParams.search === "") {
-      params.delete("search");
-    } else {
-      params.set("search", search);
-    }
+      if (newParams.page === 1) {
+        params.delete("page");
+      } else {
+        params.set("page", page.toString());
+      }
 
-    if (newParams.page === 1) {
-      params.delete("page");
-    } else {
-      params.set("page", page.toString());
-    }
+      if (newParams.category === "") {
+        params.delete("category");
+      } else {
+        params.set("category", categoryFilter);
+      }
 
-    if (newParams.category === "") {
-      params.delete("category");
-    } else {
-      params.set("category", categoryFilter);
-    }
+      if (newParams.sort === "") {
+        params.delete("sort");
+      } else {
+        params.set("sort", sort);
+      }
 
-    router.push(`?${params.toString()}`);
-  };
+      router.push(`?${params.toString()}`);
+    };
+
+    updateUrlParams({ search, page, category: categoryFilter, sort });
+  }, [search, page, categoryFilter, sort, router]);
 
   return (
     <ContentContainer title="Transactions">
@@ -143,6 +121,7 @@ const ClientTransactions = () => {
           onCategoryFilterChange={(category: string) =>
             setCategoryFilter(category)
           }
+          onSortChange={(sort: string) => setSort(sort)}
           search={search}
           budgetNames={budgetNames}
         />

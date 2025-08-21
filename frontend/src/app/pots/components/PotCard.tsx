@@ -6,6 +6,7 @@ import AddWithdrawToPotModal from "@/components/modals/AddWithdrawToPotModal";
 import AddEditPotModal from "@/components/modals/AddEditPotModal";
 import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 import PotBar from "../../../components/PotBar";
+import Popup from "../../../components/Popup";
 import { Pot } from "@/types";
 import { useAppStore } from "@/stores/useAppStore";
 
@@ -63,14 +64,10 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
           >
             <img src="images/icon-ellipsis.svg" />
             {menuOpen && (
-              <div className="absolute top-5 right-0 whitespace-nowrap flex flex-col divide-y bg-white py-2 px-4 border rounded-lg">
-                <button onClick={handleOpenEdit} className="text-left py-2">
-                  Edit Pot
-                </button>
-                <button onClick={handleOpenDelete} className="text-left py-2">
-                  Delete Pot
-                </button>
-              </div>
+              <Popup
+                labels={["Edit Pot", "Delete Pot"]}
+                onClicks={[handleOpenEdit, handleOpenDelete]}
+              />
             )}
           </div>
         </div>
