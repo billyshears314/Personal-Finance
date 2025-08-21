@@ -26,6 +26,9 @@ export const getPaginatedTransactions = async (req: Request, res: Response) => {
     const limit = parseInt(req.query.limit as string) || 10;
     const search = (req.query.search as string) || ""; // optional search string
     const budgetFilter = (req.query.budget as string) || "";
+    const sort = (req.query.sort as string) || "";
+
+    console.log("SORT: " + sort);
 
     const transactionRepository = AppDataSource.getRepository(Transaction);
 
@@ -67,11 +70,37 @@ export const getPaginatedTransactions = async (req: Request, res: Response) => {
       });
     }
 
+    switch (sort) {
+      case "latest":
+        query.orderBy("transaction.date", "DESC");
+        break;
+      case "oldest":
+        query.orderBy("transaction.date", "ASC");
+        break;
+      case "a_to_z":
+        query.orderBy("party.name", "ASC");
+        break;
+      case "z_to_a":
+        query.orderBy("party.name", "DESC");
+        break;
+      case "highest":
+        query.orderBy("transaction.amount", "DESC");
+        break;
+      case "lowest":
+        query.orderBy("transaction.amount", "ASC");
+        break;
+      default:
+        query.orderBy("transaction.date", "DESC");
+      // do nothing
+    }
+
     const [transactions, total] = await query
       .skip((page - 1) * limit)
       .take(limit)
-      .orderBy("transaction.date", "DESC")
+      // .orderBy("transaction.date", "DESC")
       .getManyAndCount();
+
+    console.log(query.getSql(), query.getParameters());
 
     res.json({
       data: transactions,
