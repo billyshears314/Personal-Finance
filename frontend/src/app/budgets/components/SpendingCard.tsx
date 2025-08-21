@@ -5,6 +5,7 @@ import AddEditBudgetModal from "../../../components/modals/AddEditBudgetModal";
 import LatestSpendingWidget from "./LatestSpendingWidget";
 import MoneyRemainingBar from "./MoneyRemainingBar";
 import { Budget } from "@/types";
+import { useAppStore } from "@/stores/useAppStore";
 
 interface SpendingCardProps {
   budget: Budget;
@@ -28,8 +29,10 @@ const SpendingCard: React.FC<SpendingCardProps> = ({ budget }) => {
     setModalType("delete");
   };
 
+  const deleteBudget = useAppStore((state) => state.deleteBudget);
+
   const handleDelete = () => {
-    console.log("HANDLE DELETE");
+    deleteBudget(budget.id);
   };
 
   useEffect(() => {
