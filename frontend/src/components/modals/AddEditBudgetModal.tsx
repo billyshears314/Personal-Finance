@@ -40,26 +40,10 @@ export default function AddEditBudgetModal({
     budget?.theme?.id || null
   );
 
-  // const createBudget = useAppStore((state) => state.createBudget);
-  // const updateBudget = useAppStore((state) => state.updateBudget);
-  // const budgets = useAppStore((state) => state.budgets);
-
   const addDescription =
     "Choose a category to set a spending budget. These categories can help you monitor spending.";
   const editDescription =
     "As your budgets change, feel free to update your spending limits.";
-
-  // const { themes, fetchThemes, loading } = useAppStore(
-  //   useShallow((state) => ({
-  //     themes: state.themes,
-  //     fetchThemes: state.fetchThemes,
-  //     loading: state.loading,
-  //     error: state.error,
-  //   }))
-  // );
-
-  // const fetchThemes = useAppStore((state) => state.fetchThemes);
-  // const themes = useAppStore((state) => state.themes);
 
   const { themes, fetchThemes, createBudget, updateBudget, budgets } =
     useAppStore(
@@ -72,48 +56,15 @@ export default function AddEditBudgetModal({
       }))
     );
 
-  // const { themes, fetchThemes } = useAppStore(
-  //   useShallow((state) => ({
-  //     themes: state.themes,
-  //     fetchThemes: state.fetchThemes,
-  //     loading: state.loading,
-  //     error: state.error,
-  //   }))
-  // );
-
   useEffect(() => {
     if (themes.length === 0) fetchThemes();
   }, [themes, fetchThemes]);
 
-  // const fetchThemesCallback = useCallback(() => {
-  //   fetchThemes();
-  // }, [fetchThemes]);
-
-  // useEffect(() => {
-  //   fetchThemesCallback();
-  // }, [fetchThemesCallback]);
-
-  // // TODO: FIX THIS...
-  // useEffect(() => {
-  //   console.log("USE EFFECT");
-  //   fetchThemes();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  console.log("THEMES: " + JSON.stringify(themes));
-
   const save = () => {
-    if (!budget) return;
-
     if (!name || maximumSpend === null || colorTag === null) {
       alert("Please fill out all fields");
       return;
     }
-
-    console.log("SAVE");
-    // console.log("Budget Category: " + budgetCategory);
-    console.log("Maximum Spend: " + maximumSpend);
-    console.log("Theme: " + colorTag);
 
     if (mode === "add" && colorTag) {
       createBudget({
@@ -124,7 +75,7 @@ export default function AddEditBudgetModal({
       });
     }
 
-    if (mode === "edit" && colorTag) {
+    if (mode === "edit" && budget && colorTag) {
       updateBudget(budget.id, {
         name,
         spent: budget.spent,
