@@ -70,6 +70,7 @@ function getErrorMessage(
 }
 
 const createFetchThemes = (set) => async () => {
+  console.log("--------CREATE FETCH THEMES CALLED-------");
   set({ loading: true, error: null });
   try {
     const res = await axios.get(`${APIHost}/themes`);
@@ -315,7 +316,17 @@ export const useAppStore = create<AppState>((set, get) => ({
     }
   },
 
-  fetchThemes: createFetchThemes(set),
+  fetchThemes: async () => {
+    try {
+      set({ loading: true, error: null });
+      const res = await axios.get(`${APIHost}/themes`);
+      set({ themes: res.data, loading: false });
+    } catch (err: unknown) {
+      set({ error: "Failed to fetch themes", loading: false });
+    }
+  },
+
+  // fetchThemes: createFetchThemes(set),
   // set({ loading: true, error: null });
   // try {
   //   const response = await axios.get(`${APIHost}/themes`);

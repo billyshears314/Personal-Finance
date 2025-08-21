@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
+// import { useShallow } from "zustand/shallow";
+import { useShallow } from "zustand/shallow";
 import Modal from "../Modal";
 import InputField from "./InputField";
 // import Dropdown from "../Dropdown";
@@ -6,6 +8,7 @@ import DropdownWithColor from "./DropdownWithColor";
 import Button from "./Button";
 import { Budget } from "@/types";
 import { useAppStore } from "@/stores/useAppStore";
+import { max } from "lodash";
 
 type Mode = "add" | "edit";
 
@@ -37,9 +40,9 @@ export default function AddEditBudgetModal({
     budget?.theme?.id || null
   );
 
-  const createBudget = useAppStore((state) => state.createBudget);
-  const updateBudget = useAppStore((state) => state.updateBudget);
-  const budgets = useAppStore((state) => state.budgets);
+  // const createBudget = useAppStore((state) => state.createBudget);
+  // const updateBudget = useAppStore((state) => state.updateBudget);
+  // const budgets = useAppStore((state) => state.budgets);
 
   const addDescription =
     "Choose a category to set a spending budget. These categories can help you monitor spending.";
@@ -55,15 +58,47 @@ export default function AddEditBudgetModal({
   //   }))
   // );
 
-  const fetchThemes = useAppStore((state) => state.fetchThemes);
-  const themes = useAppStore((state) => state.themes);
+  // const fetchThemes = useAppStore((state) => state.fetchThemes);
+  // const themes = useAppStore((state) => state.themes);
 
-  // TODO: FIX THIS...
+  const { themes, fetchThemes, createBudget, updateBudget, budgets } =
+    useAppStore(
+      useShallow((state) => ({
+        themes: state.themes,
+        fetchThemes: state.fetchThemes,
+        createBudget: state.createBudget,
+        updateBudget: state.updateBudget,
+        budgets: state.budgets,
+      }))
+    );
+
+  // const { themes, fetchThemes } = useAppStore(
+  //   useShallow((state) => ({
+  //     themes: state.themes,
+  //     fetchThemes: state.fetchThemes,
+  //     loading: state.loading,
+  //     error: state.error,
+  //   }))
+  // );
+
   useEffect(() => {
-    console.log("USE EFFECT");
-    fetchThemes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchThemes]);
+    if (themes.length === 0) fetchThemes();
+  }, [themes, fetchThemes]);
+
+  // const fetchThemesCallback = useCallback(() => {
+  //   fetchThemes();
+  // }, [fetchThemes]);
+
+  // useEffect(() => {
+  //   fetchThemesCallback();
+  // }, [fetchThemesCallback]);
+
+  // // TODO: FIX THIS...
+  // useEffect(() => {
+  //   console.log("USE EFFECT");
+  //   fetchThemes();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   console.log("THEMES: " + JSON.stringify(themes));
 
@@ -93,7 +128,7 @@ export default function AddEditBudgetModal({
       updateBudget(budget.id, {
         name,
         spent: budget.spent,
-        max: budget.max,
+        max: maximumSpend,
         theme: { id: colorTag },
       });
     }

@@ -57,7 +57,7 @@ const TransactionSearchBar: React.FC<TransactionSearchBarProps> = ({
     label: "Category",
     options: [
       {
-        label: "All transactions",
+        label: "All Transactions",
         value: "",
       },
     ],

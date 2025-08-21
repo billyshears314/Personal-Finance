@@ -32,7 +32,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
   return (
     <Link
       href={link}
-      className={`relative p-2 flow-root hover:bg-gray-700 rounded-tr-md rounded-br-md ${
+      className={`relative p-2 flow-root rounded-tr-md rounded-br-md ${
         active
           ? "bg-gray-200 text-gray-800 before:content-[''] before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-[#277C78] "
           : ""
