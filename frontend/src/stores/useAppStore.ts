@@ -69,6 +69,17 @@ function getErrorMessage(
   return fallback;
 }
 
+const createFetchThemes = (set) => async () => {
+  set({ loading: true, error: null });
+  try {
+    const res = await axios.get(`${APIHost}/themes`);
+    set({ themes: res.data, loading: false });
+  } catch (err: unknown) {
+    console.log(err);
+    set({ error: "Failed to fetch themes", loading: false });
+  }
+};
+
 export const useAppStore = create<AppState>((set, get) => ({
   balance: 1000,
   income: 2000,
@@ -144,6 +155,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.post<Pot>(`${APIHost}/pots`, newPot);
+      console.log("RESPONSE:" + JSON.stringify(response.data, null, 2));
       set((state) => ({
         pots: [...state.pots, response.data],
         loading: false,
@@ -303,18 +315,18 @@ export const useAppStore = create<AppState>((set, get) => ({
     }
   },
 
-  fetchThemes: async () => {
-    set({ loading: true, error: null });
-    try {
-      const response = await axios.get(`${APIHost}/themes`);
-      set({ themes: response.data, loading: false });
-    } catch (error: unknown) {
-      set({
-        error: getErrorMessage(error, "Failed to fetch themes"),
-        loading: false,
-      });
-    }
-  },
+  fetchThemes: createFetchThemes(set),
+  // set({ loading: true, error: null });
+  // try {
+  //   const response = await axios.get(`${APIHost}/themes`);
+  //   set({ themes: response.data, loading: false });
+  // } catch (error: unknown) {
+  //   set({
+  //     error: getErrorMessage(error, "Failed to fetch themes"),
+  //     loading: false,
+  //   });
+  // }
+  // },
 
   depositMoneyToPot: async (potId: number, amount: number) => {
     try {

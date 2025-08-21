@@ -49,7 +49,7 @@ const PotBar: React.FC<PotBarProps> = ({
       </div>
       <div className="my-4">
         <Bar
-          color={pot.theme.color || "red"}
+          color={pot?.theme?.color || "red"}
           value={originalPercentOfTarget}
           valueChange={percentOfValueChange}
           size="small"

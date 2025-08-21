@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useShallow } from "zustand/shallow";
+import { useState, useEffect } from "react";
 import Modal from "../Modal";
 import InputField from "./InputField";
 // import Dropdown from "../Dropdown";
@@ -21,7 +20,7 @@ const capitalizeEachWord = (str: string) => {
 };
 
 const checkIfAlreadyUsed = (budgets, theme) => {
-  return budgets.some((budget) => budget.theme.id === theme.id);
+  return budgets.some((budget) => budget?.theme?.id === theme.id);
 };
 
 export default function AddEditBudgetModal({
@@ -47,22 +46,30 @@ export default function AddEditBudgetModal({
   const editDescription =
     "As your budgets change, feel free to update your spending limits.";
 
-  const { themes } = useAppStore(
-    useShallow((state) => ({
-      themes: state.themes,
-      fetchThemes: state.fetchThemes,
-      loading: state.loading,
-      error: state.error,
-    }))
-  );
+  // const { themes, fetchThemes, loading } = useAppStore(
+  //   useShallow((state) => ({
+  //     themes: state.themes,
+  //     fetchThemes: state.fetchThemes,
+  //     loading: state.loading,
+  //     error: state.error,
+  //   }))
+  // );
+
+  const fetchThemes = useAppStore((state) => state.fetchThemes);
+  const themes = useAppStore((state) => state.themes);
 
   // TODO: FIX THIS...
-  // useEffect(() => {
-  //   console.log("USE EFFECT");
-  //   fetchThemes();
-  // }, [fetchThemes]);
+  useEffect(() => {
+    console.log("USE EFFECT");
+    fetchThemes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchThemes]);
+
+  console.log("THEMES: " + JSON.stringify(themes));
 
   const save = () => {
+    if (!budget) return;
+
     if (!name || maximumSpend === null || colorTag === null) {
       alert("Please fill out all fields");
       return;
@@ -115,9 +122,9 @@ export default function AddEditBudgetModal({
 
   const colorOptions = themes.map((theme) => {
     return {
-      label: capitalizeEachWord(theme.name || "Unknown"),
-      value: theme.id,
-      color: theme.color || "red",
+      label: capitalizeEachWord(theme?.name || "Unknown"),
+      value: theme?.id,
+      color: theme?.color || "red",
       alreadyUsed: checkIfAlreadyUsed(budgets, theme),
     };
   });
@@ -149,12 +156,14 @@ export default function AddEditBudgetModal({
         onChange={(value) => setMaximumSpend(parseInt(value))}
         initialValue={maximumSpend}
       />
-      <DropdownWithColor
-        label="Theme"
-        options={colorOptions}
-        onChange={(value) => setColorTag(value as number)}
-        value={colorTag}
-      />
+      {themes.length > 0 && (
+        <DropdownWithColor
+          label="Theme"
+          options={colorOptions}
+          onChange={(value) => setColorTag(value as number)}
+          value={colorTag}
+        />
+      )}
       <Button
         text={mode === "add" ? "Add Budget" : "Save Changes"}
         onClick={save}

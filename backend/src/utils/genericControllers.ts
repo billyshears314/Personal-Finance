@@ -8,7 +8,13 @@ export function createGetAll<T>(
   entity: EntityTarget<T>
 ) {
   return async (req: Request, res: Response) => {
-    const repository: Repository<T> = dataSource.getRepository(entity);
+    // const repo = dataSource.getRepository(entity);
+    // const all = await repo
+    //   .createQueryBuilder("e")
+    //   .orderBy("e.id", "DESC")
+    //   .getMany();
+    // res.json(all);
+    const repository = dataSource.getRepository(entity);
     const allItems = await repository.find();
     res.json(allItems);
   };
@@ -31,12 +37,60 @@ export function createGetById<T>(
   };
 }
 
-export function createPost<T>(dataSource: DataSource, entity: EntityTarget<T>) {
+type WithId = { id: number | string };
+
+export function createPost<T>(
+  dataSource: DataSource,
+  entity: EntityTarget<T>,
+  relations: { [K in keyof T]?: EntityTarget<WithId> } = {}
+) {
   return async (req: Request, res: Response) => {
-    const repository: Repository<T> = dataSource.getRepository(entity);
-    const newItem = repository.create(req.body);
-    await repository.save(newItem);
-    res.status(201).json(newItem);
+    try {
+      const repository: Repository<T> = dataSource.getRepository(entity);
+      const data = req.body;
+
+      // Create new entity instance
+      const newItem = repository.create();
+
+      // Assign properties and hydrate relations
+      for (const key in data) {
+        if (
+          key in relations &&
+          data[key] &&
+          typeof data[key] === "object" &&
+          "id" in data[key]
+        ) {
+          const relatedRepo = dataSource.getRepository(relations[key]!);
+          const relatedEntity = await relatedRepo.findOneBy({
+            id: data[key].id,
+          } as any);
+
+          if (!relatedEntity) {
+            return res
+              .status(400)
+              .json({ message: `Related ${key} not found` });
+          }
+
+          (newItem as any)[key] = relatedEntity;
+        } else {
+          (newItem as any)[key] = data[key];
+        }
+      }
+
+      // Save to DB
+      const saved = await repository.save(newItem);
+
+      // Reload with relations to return full objects
+      const result = await repository.findOne({
+        where: { id: (saved as any).id } as any,
+        relations: Object.keys(relations) as string[],
+      });
+
+      return res.status(201).json(result ?? saved);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
   };
 }
 

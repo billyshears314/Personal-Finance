@@ -43,7 +43,7 @@ const InputField: React.FC<InputFieldProps> = ({
       <input
         id={selectId}
         type={type}
-        value={value}
+        value={value === null ? "" : value}
         placeholder={placeholderText}
         onChange={(e) => handleOnChange(e.target.value)}
         className="border p-2 rounded border-black text-xs"

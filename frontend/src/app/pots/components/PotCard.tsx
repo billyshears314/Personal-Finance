@@ -50,11 +50,13 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
     if (modalType) setMenuOpen(false);
   }, [modalType]);
 
+  console.log("POT: " + JSON.stringify(pot, null, 2));
+
   return (
     <>
       <div className="rounded-xl bg-white p-4">
         <div className="flex items-center">
-          <TitleWithDot title={pot.name} color={pot.theme.color || "red"} />
+          <TitleWithDot title={pot.name} color={pot?.theme?.color || "red"} />
           <div
             className="relative ml-auto cursor-pointer w-6 h-6 flex items-center justify-center"
             onClick={handleOpenMenu}
