@@ -321,6 +321,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       const res = await axios.get(`${APIHost}/themes`);
       set({ themes: res.data, loading: false });
     } catch (err: unknown) {
+      console.log(err);
       set({ error: "Failed to fetch themes", loading: false });
     }
   },

@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 // import { useShallow } from "zustand/shallow";
 import { useShallow } from "zustand/shallow";
 import Modal from "../Modal";
@@ -8,7 +8,6 @@ import DropdownWithColor from "./DropdownWithColor";
 import Button from "./Button";
 import { Budget } from "@/types";
 import { useAppStore } from "@/stores/useAppStore";
-import { max } from "lodash";
 
 type Mode = "add" | "edit";
 
