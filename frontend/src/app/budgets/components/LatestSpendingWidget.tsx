@@ -1,41 +1,42 @@
 import DetailsLink from "@/components/DetailsLink";
+import { Transaction } from "@/types";
 
 interface LatestSpendingRowProps {
-  icon: string;
-  name: string;
-  amount: number;
-  date: string;
+  transaction: Transaction;
+  // icon: string;
+  // name: string;
+  // amount: number;
+  // date: string;
 }
 
 interface LatestSpendingWidgetProps {
-  empty?: string; // just to satisfy error
+  transactions: Transaction[];
 }
 
-const LatestSpendingWidget: React.FC<LatestSpendingWidgetProps> = ({}) => {
+const LatestSpendingWidget: React.FC<LatestSpendingWidgetProps> = ({
+  transactions,
+}) => {
   const LatestSpendingRow: React.FC<LatestSpendingRowProps> = ({
-    icon,
-    name,
-    amount,
-    date,
+    transaction,
   }) => {
     return (
       <tr className="h-20">
         <td className="hidden md:table-cell align-middle w-[30px]">
           <div className="h-8 w-8">
-            <img className="rounded-full" src={`images/avatars/${icon}`} />
+            <img className="rounded-full" src={transaction?.party?.iconUrl} />
           </div>
         </td>
         <td>
-          <div className="font-bold md:ml-4">{name}</div>
+          <div className="font-bold md:ml-4">{transaction?.party?.name}</div>
         </td>
         <td>
           <div className="text-right ml-auto">
             <div className="text-gray-900 font-bold">
-              {amount < 0
-                ? `-$${Math.abs(amount).toFixed(2)}`
-                : `${amount.toFixed(2)}`}
+              {transaction?.amount < 0
+                ? `-$${Math.abs(transaction?.amount).toFixed(2)}`
+                : `${transaction?.amount.toFixed(2)}`}
             </div>
-            <div className="text-gray-500">{date}</div>
+            <div className="text-gray-500">{transaction?.date}</div>
           </div>
         </td>
       </tr>
@@ -45,7 +46,18 @@ const LatestSpendingWidget: React.FC<LatestSpendingWidgetProps> = ({}) => {
   const LatestSpendingTable = () => (
     <table className="w-full">
       <tbody className="divide-y divide-gray-300">
-        <LatestSpendingRow
+        {transactions.map((transaction) => {
+          return (
+            <LatestSpendingRow transaction={transaction} key={transaction.id} />
+          );
+        })}
+      </tbody>
+    </table>
+  );
+
+  // <LatestSpendingRow transaction
+  {
+    /* <LatestSpendingRow
           icon="bytewise.jpg"
           name="Papa Software"
           amount={-10.0}
@@ -62,17 +74,19 @@ const LatestSpendingWidget: React.FC<LatestSpendingWidgetProps> = ({}) => {
           name="Romeo Cloud Service"
           amount={-10.0}
           date="30 Jul 2024"
-        />
-      </tbody>
-    </table>
-  );
+        /> */
+  }
 
   return (
     <div className="bg-beige-100 p-4 rounded-lg">
       <div className="flex items-center mb-4">
         <div className="text-lg font-bold">Latest Spending</div>
         <div className="ml-auto">
-          <DetailsLink text="See All" link="/transactions" />
+          <DetailsLink
+            text="See All"
+            link="/transactions"
+            query={{ category: transactions[0]?.budget?.name }}
+          />
         </div>
         {/* TODO: Specify link for all transactions for that category */}
       </div>

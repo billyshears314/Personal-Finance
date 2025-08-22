@@ -50,8 +50,6 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
     if (modalType) setMenuOpen(false);
   }, [modalType]);
 
-  console.log("POT: " + JSON.stringify(pot, null, 2));
-
   return (
     <>
       <div className="rounded-xl bg-white p-4">
@@ -66,6 +64,7 @@ const PotCard: React.FC<PotCardProps> = ({ pot }: PotCardProps) => {
               <Popup
                 labels={["Edit Pot", "Delete Pot"]}
                 onClicks={[handleOpenEdit, handleOpenDelete]}
+                onClose={() => setMenuOpen(false)}
               />
             )}
           </div>

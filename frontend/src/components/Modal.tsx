@@ -1,5 +1,6 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useRef } from "react";
 import ReactDOM from "react-dom";
+import { useClickAway } from "@/hooks/useClickAway";
 
 interface ModalProps {
   title: string;
@@ -14,17 +15,23 @@ export default function Modal({
   children,
   onClose,
 }: ModalProps) {
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [onClose]);
+  const modalRef = useRef<HTMLDivElement>(null);
+  useClickAway(modalRef, onClose);
+
+  // useEffect(() => {
+  //   const onKeyDown = (e: KeyboardEvent) => {
+  //     if (e.key === "Escape") onClose();
+  //   };
+  //   document.addEventListener("keydown", onKeyDown);
+  //   return () => document.removeEventListener("keydown", onKeyDown);
+  // }, [onClose]);
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg relative w-[560px]">
+      <div
+        ref={modalRef}
+        className="bg-white p-6 rounded-lg shadow-lg relative w-[560px]"
+      >
         <div className="flex mb-5">
           <div className="text-3xl font-bold">{title}</div>
           <button

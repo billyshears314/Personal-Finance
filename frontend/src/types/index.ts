@@ -4,6 +4,7 @@ export interface Budget {
   spent: number;
   max: number;
   theme: Theme;
+  transactions?: Transaction[];
 }
 
 export interface Pot {

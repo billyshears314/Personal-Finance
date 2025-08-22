@@ -120,6 +120,7 @@ const TransactionSearchBar: React.FC<TransactionSearchBarProps> = ({
                 onClicks={sortBy.options.map(
                   (option) => (e) => handleSortChange(e, option.value)
                 )}
+                onClose={() => setMenuOpen(null)}
               />
             )}
           </div>
@@ -135,6 +136,7 @@ const TransactionSearchBar: React.FC<TransactionSearchBarProps> = ({
                 onClicks={category.options.map(
                   (option) => (e) => handleFilterChange(e, option.value)
                 )}
+                onClose={() => setMenuOpen(null)}
               />
             )}
           </div>

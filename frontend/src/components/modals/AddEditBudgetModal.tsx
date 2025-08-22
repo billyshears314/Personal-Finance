@@ -31,7 +31,6 @@ export default function AddEditBudgetModal({
   onClose,
   mode = "add",
 }: AddEditBudgetModalProps) {
-  console.log("RENDER ADD EDIT BUDGET MODAL");
   const [name, setName] = useState(budget?.name || "");
   const [maximumSpend, setMaximumSpend] = useState<number | null>(
     budget?.max ?? null
@@ -57,8 +56,8 @@ export default function AddEditBudgetModal({
     );
 
   useEffect(() => {
-    if (themes.length === 0) fetchThemes();
-  }, [themes, fetchThemes]);
+    fetchThemes();
+  }, []);
 
   const save = () => {
     if (!name || maximumSpend === null || colorTag === null) {
@@ -87,25 +86,6 @@ export default function AddEditBudgetModal({
     onClose();
   };
 
-  // const budgetCategoryOptions = [
-  //   {
-  //     label: "Entertainment",
-  //     value: "entertainment",
-  //   },
-  //   {
-  //     label: "Bills",
-  //     value: "bills",
-  //   },
-  //   {
-  //     label: "Dining Out",
-  //     value: "dining_out",
-  //   },
-  //   {
-  //     label: "Personal Care",
-  //     value: "personal_care",
-  //   },
-  // ];
-
   const colorOptions = themes.map((theme) => {
     return {
       label: capitalizeEachWord(theme?.name || "Unknown"),
@@ -121,13 +101,6 @@ export default function AddEditBudgetModal({
       description={mode === "add" ? addDescription : editDescription}
       onClose={onClose}
     >
-      {/* <DropdownWithColor
-        label="Budget Category"
-        placeholderText="Choose Budget"
-        options={budgetCategoryOptions}
-        onChange={(value) => setBudgetCategory(value as string)}
-        hasColor={false}
-      /> */}
       <div className="mb-4">
         <InputField
           label="Budget Name"

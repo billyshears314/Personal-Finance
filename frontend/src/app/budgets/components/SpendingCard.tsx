@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import TitleWithDot from "../../../components/TitleWithDot";
 import DeleteConfirmationModal from "../../../components/modals/DeleteConfirmationModal";
 import AddEditBudgetModal from "../../../components/modals/AddEditBudgetModal";
+import Popup from "../../../components/Popup";
 import LatestSpendingWidget from "./LatestSpendingWidget";
 import MoneyRemainingBar from "./MoneyRemainingBar";
 import { Budget } from "@/types";
@@ -50,14 +51,11 @@ const SpendingCard: React.FC<SpendingCardProps> = ({ budget }) => {
           >
             <img src="images/icon-ellipsis.svg" />
             {menuOpen && (
-              <div className="absolute top-5 right-0 whitespace-nowrap flex flex-col divide-y bg-white py-2 px-4 border rounded-lg">
-                <button onClick={handleOpenEdit} className="text-left py-2">
-                  Edit Budget
-                </button>
-                <button onClick={handleOpenDelete} className="text-left py-2">
-                  Delete Budget
-                </button>
-              </div>
+              <Popup
+                labels={["Edit Budget", "Delete Budget"]}
+                onClicks={[handleOpenEdit, handleOpenDelete]}
+                onClose={() => setMenuOpen(false)}
+              />
             )}
           </div>
         </div>
@@ -67,7 +65,9 @@ const SpendingCard: React.FC<SpendingCardProps> = ({ budget }) => {
           max={budget.max}
         />
         <div className="mt-4">
-          <LatestSpendingWidget />
+          {budget?.transactions?.length > 0 && (
+            <LatestSpendingWidget transactions={budget?.transactions} />
+          )}
         </div>
       </div>
       {modalType === "edit" && (

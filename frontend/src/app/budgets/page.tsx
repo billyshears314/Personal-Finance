@@ -15,7 +15,7 @@ const BudgetPage = () => {
     setIsModalOpen(true);
   };
 
-  const { budgets, fetchBudgets, loading } = useAppStore(
+  const { budgets, fetchBudgets } = useAppStore(
     useShallow((state) => ({
       budgets: state.budgets,
       fetchBudgets: state.fetchBudgets,
@@ -26,34 +26,30 @@ const BudgetPage = () => {
 
   useEffect(() => {
     fetchBudgets();
-  }, [fetchBudgets]);
+  }, []);
 
   return (
     <>
-      {loading ? (
-        <div>Loading</div>
-      ) : (
-        <ContentContainer
-          title="Budgets"
-          buttonText="+ Add New Budget"
-          onButtonClick={handleAddNewBudget}
-        >
-          <div className="flex flex-col xl:flex-row">
-            <div className="w-full mb-8 xl:pr-4 xl:w-2/5">
-              <SpendingSummaryWidget />
-            </div>
-            <div className="w-full xl:pl-4 xl:w-3/5">
-              {budgets.map((budget) => {
-                return (
-                  <div className="mb-8" key={budget.id}>
-                    <SpendingCard budget={budget} />
-                  </div>
-                );
-              })}
-            </div>
+      <ContentContainer
+        title="Budgets"
+        buttonText="+ Add New Budget"
+        onButtonClick={handleAddNewBudget}
+      >
+        <div className="flex flex-col xl:flex-row">
+          <div className="w-full mb-8 xl:pr-4 xl:w-2/5">
+            <SpendingSummaryWidget />
           </div>
-        </ContentContainer>
-      )}
+          <div className="w-full xl:pl-4 xl:w-3/5">
+            {budgets.map((budget) => {
+              return (
+                <div className="mb-8" key={budget.id}>
+                  <SpendingCard budget={budget} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </ContentContainer>
 
       {isModalOpen && (
         <AddEditBudgetModal onClose={() => setIsModalOpen(false)} />
