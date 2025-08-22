@@ -35,8 +35,9 @@ export default function AddEditPotModal({
   );
 
   const addDescription =
-    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus  hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet.";
-  const editDescription = "Edit";
+    "Create a pot to set savings targets. These can help keep you on track as you save for special purchases.";
+  const editDescription =
+    "If your saving targets change, feel free to update your pots.";
 
   const createPot = useAppStore((state) => state.createPot);
   const updatePot = useAppStore((state) => state.updatePot);
