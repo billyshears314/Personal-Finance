@@ -7,10 +7,11 @@ import Button from "./Button";
 import PotBar from "../PotBar";
 import { useAppStore } from "@/stores/useAppStore";
 import { Pot } from "@/types";
+import { BarType } from "@/types";
 
 interface AddWithdrawToPotModalProps {
   /* TODO Make type a real type instead of string */
-  type: string;
+  type: BarType;
   pot: Pot;
   onClose: () => void;
 }

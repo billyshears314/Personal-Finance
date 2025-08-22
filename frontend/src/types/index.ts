@@ -57,3 +57,5 @@ export interface PaginationMetaData {
   page: number;
   lastPage: number;
 }
+
+export type BarType = "regular" | "add" | "withdraw";
